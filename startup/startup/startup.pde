@@ -1,4 +1,12 @@
+import java.util.Iterator;
 
+// Global variables
+Graph graph = new Graph();
+int cols, rows;
+int tileSize;
+
+// Path to follow
+ArrayList<Edge> pathToFollow;
 
 void setup() {
   
