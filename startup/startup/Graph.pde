@@ -131,6 +131,46 @@ class Graph {
     return path;
   }
   
+    void initialize(int w, int h, int t) {
+    tileSize = t;
+    cols = w/tileSize;
+    rows = h/tileSize;
+    
+    for (int j = 0; j < rows; j++) {
+      for (int i = 0; i < cols; i++) {
+        Node n = new Node("", new ArrayList<Edge>(), i*tileSize, j*tileSize, tileSize);
+        addNode(n);
+    
+      }
+    }
+    
+    
+    for (int j = 0; j < rows; j++) {
+      for (int i = 0; i < cols; i++) {
+        int index = j * cols + i;
+  
+        if (i > 0) {
+          Edge left = new Edge(nodes.get(index), nodes.get(index - 1), tileSize);
+          nodes.get(index).edges.add(left);
+          
+        }
+        if (i < cols - 1) {
+          Edge right = new Edge(nodes.get(index), nodes.get(index + 1), tileSize);
+          nodes.get(index).edges.add(right);
+          
+        }
+        if (j > 0) {
+          Edge top = new Edge(nodes.get(index), nodes.get(index - cols), tileSize);
+          nodes.get(index).edges.add(top);
+        }
+        if (j < rows - 1) {
+          Edge bottom = new Edge(nodes.get(index), nodes.get(index + cols), tileSize);
+          nodes.get(index).edges.add(bottom);
+        } 
+      }
+    }
+  
+  }
   
   
 
