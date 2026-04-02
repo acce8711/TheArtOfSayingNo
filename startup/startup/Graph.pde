@@ -172,6 +172,14 @@ class Graph {
   
   }
   
-  
+  boolean isBlockedOff(float location_x, float location_y) {
+    int tileX = floor(location_x/tileSize);
+    int tileY = floor(location_y/tileSize);
+    
+    int tile_index = (tileY * cols) + (tileX);
+    print(graph.nodes.get(tile_index).block);
+    return graph.nodes.get(tile_index).block;
+    
+  }
 
 }
