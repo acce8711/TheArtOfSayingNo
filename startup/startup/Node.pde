@@ -22,6 +22,11 @@ class Node {
   void display() {
     rectMode(CORNER);
     fill(fillcolor);
+    if (!block) {
+        stroke(255);
+    } else {
+      stroke(0);
+    }
     rect(position.x, position.y, size, size);
     
     
@@ -74,6 +79,10 @@ class Node {
   void reset() {
     if (!block)
       fillcolor = 255;
+  }
+  
+  void explode(float noise) {
+    fillcolor = color(100, 30,30, noise);
   }
   
   PVector getTileCenter() {
