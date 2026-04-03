@@ -6,7 +6,7 @@ Graph graph = new Graph();
 int cols, rows;
 int tileSize;
 boolean npc_following_player;
-
+Dialogue dialogue;
 
 // Map image
 PImage map;
@@ -15,6 +15,22 @@ Character mainCharacter;
 
 // Images
 PImage npc_dialogue_img;
+
+// "No" option images
+PImage option_1_img;
+PImage option_2_img;
+PImage option_3_img;
+PImage option_4_img;
+PImage option_5_img;
+PImage option_6_img;
+PImage buttons_img;
+
+//
+PImage car_img;
+
+// Fonts
+PFont dialogue_font;
+PFont actions_font;
 
 // Animations
 Gif mc_idle_gif;
@@ -48,6 +64,13 @@ void setup() {
   map = loadImage("demo-map.png");
   image(map,0,0, width, height);
   
+  buttons_img = loadImage("options-buttons.png");
+  car_img = loadImage("ccar.png");
+  
+  // Load fonts
+  dialogue_font = createFont("Jersey10-Regular.ttf", 48);
+  actions_font = createFont("Jersey10-Regular.ttf", 24);
+  
   // Load GIFs
   mc_idle_gif = new Gif(this, "mc-idle.gif");
   mc_idle_gif.loop();
@@ -72,6 +95,9 @@ void setup() {
   tileSize = 25;
   cols = width/tileSize;
   rows = height/tileSize;
+  
+  // Dialogue setup
+  dialogue = new Dialogue(160);
   
   npc_following_player = false;
   start_time = millis();
@@ -134,6 +160,8 @@ void draw() {
   mainCharacter.display();
   
   time_elapsed = millis() - start_time;
+  
+  dialogue.display();
 }
 
 
