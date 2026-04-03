@@ -3,12 +3,14 @@ class NPC extends Character{
   int currentRoomIndex;
   RoomInformation room;
   NPC_State currentState;
+  boolean is_dead;
   
   NPC(int roomIndex, RoomInformation room, PVector spawnLocation) {
     super(loadImage("npc_placeholder.png"), spawnLocation);
     currentState = new WanderState();
     currentState.enterState(this);
     currentRoomIndex = roomIndex;
+    is_dead = false;
     this.room = room;
   }
   
@@ -74,6 +76,8 @@ class NPC extends Character{
     int counter = 0;
     
     for (NPC npc : npcs) {
+      if(npc.is_dead)
+        continue;
       float distance = PVector.dist(location, npc.location);
       
       if(distance < desiredseparation && distance > 0) {

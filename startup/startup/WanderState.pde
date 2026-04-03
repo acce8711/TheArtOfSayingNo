@@ -9,7 +9,8 @@ class WanderState extends NPC_State {
   void updateState(NPC npc) {
     if(!npc_following_player && time_elapsed >= time_before_target)
     {
-      setPlayerFollowingAndResetTime();
+      setPlayerFollowing(true);
+      resetTime();
       npc.switchState(new TargetState());
     } else {
       //wander within the room and avoid the walls
