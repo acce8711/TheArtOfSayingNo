@@ -22,7 +22,7 @@ PImage option_2_img;
 PImage option_3_img;
 PImage option_4_img;
 PImage option_5_img;
-PImage option_6_img;
+PImage buttons_w_text_ref_img;
 PImage buttons_img;
 
 //
@@ -64,6 +64,7 @@ void setup() {
   map = loadImage("demo-map.png");
   image(map,0,0, width, height);
   
+  buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
   car_img = loadImage("ccar.png");
   
@@ -189,7 +190,14 @@ RoomInformation GeRandomRoom(int curr_room){
   return rooms.get(room_index);
 }
 
-
+void keyPressed () {
+  if (key == ' ') {
+    dialogue.toggleVisibility();
+  }
+  if (key == 'v') {
+    dialogue.randomiseQuestion();
+  }
+}
 
 void setPlayerFollowing(boolean is_following){
   npc_following_player = is_following;
