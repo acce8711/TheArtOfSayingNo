@@ -1,4 +1,6 @@
 import java.util.Iterator;
+import gifAnimation.*;
+
 // Global variables
 Graph graph = new Graph();
 int cols, rows;
@@ -10,6 +12,17 @@ boolean npc_following_player;
 PImage map;
 ArrayList<NPC> npcs;
 Character mainCharacter;
+
+// Images
+PImage npc_dialogue_img;
+
+// Animations
+Gif mc_idle_gif;
+Gif mc_walking_gif;
+Gif npc_idle_gif;
+Gif npc_walking_gif;
+Gif title_load_gif;
+Gif title_enter_gif;
 
 int start_time;
 int time_elapsed;
@@ -31,11 +44,31 @@ void setup() {
   pixelDensity(1);
   size(900,600);
   
+  // Load images
   map = loadImage("demo-map.png");
   image(map,0,0, width, height);
   
+  // Load GIFs
+  mc_idle_gif = new Gif(this, "mc-idle.gif");
+  mc_idle_gif.loop();
   
-
+  mc_walking_gif = new Gif(this, "mc-walk.gif");
+  mc_walking_gif.loop();
+  
+  npc_idle_gif = new Gif(this, "npc-idle.gif");
+  npc_idle_gif.loop();
+  
+  npc_walking_gif = new Gif(this, "npc-walking.gif");
+  npc_walking_gif.loop();
+  
+  title_load_gif = new Gif(this, "title-load.gif");
+  title_load_gif.ignoreRepeat();
+  title_load_gif.play();
+  
+  title_enter_gif = new Gif(this, "title-enter.gif");
+  title_enter_gif.loop();
+  
+  // Tilemap setup
   tileSize = 25;
   cols = width/tileSize;
   rows = height/tileSize;
