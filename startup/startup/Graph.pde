@@ -181,5 +181,16 @@ class Graph {
     return graph.nodes.get(tile_index).block;
     
   }
+  
+  Node getTileAtLocation(float location_x, float location_y) {
+    int tileX = floor(location_x/tileSize);
+    int tileY = floor(location_y/tileSize);
+    
+    int tile_index = (tileY * cols) + (tileX);
+    
+    graph.nodes.get(tile_index).highlight();
+    return graph.nodes.get(tile_index);
+    
+  }
 
 }

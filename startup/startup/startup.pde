@@ -128,7 +128,8 @@ void draw() {
     n.display();
   }
   for (NPC npc : npcs){
-    npc.updateNPC();
+    if(!npc.is_dead)
+      npc.updateNPC();
   }
   mainCharacter.display();
   
@@ -136,8 +137,37 @@ void draw() {
 }
 
 
-void setPlayerFollowingAndResetTime(){
-  npc_following_player = true;
+int GetRoomAtTile(PVector tile_center){
+  int room_index_at_tile = -1;
+ 
+  for(int i=0; i< rooms.size(); i++){
+    RoomInformation room = rooms.get(i);
+    if(tile_center.x >= room.min_x && tile_center.x <= room.max_x && tile_center.y >= room.min_y && tile_center.y <= room.max_y)
+    {
+      room_index_at_tile = i;
+      break;
+    }
+  }
+  
+  return room_index_at_tile;
+}
+
+RoomInformation GeRandomRoom(int curr_room){
+  int room_index = curr_room;
+  while(room_index == curr_room){
+    room_index = int(random(0, rooms.size()));
+  }
+  
+  return rooms.get(room_index);
+}
+
+
+
+void setPlayerFollowing(boolean is_following){
+  npc_following_player = is_following;
+}
+
+void resetTime(){
   start_time = millis();
   time_elapsed = 0;
 }

@@ -10,11 +10,12 @@ class TargetState extends NPC_State {
   
   void updateState(NPC npc) {
     if(npc.CheckIfNearPlayer()){
-      npc.switchState(new NPCIdleState());
+      //npc.switchState(new NPCIdleState());
+      npc.switchState(new NPCGoToNewRoomState());
     }
     else if(time_elapsed >= 1000) {
       createFollowPath(npc);
-      start_time = 0;
+      start_time = millis();
       time_elapsed = 0;
     }
     npc.followAStarPath(pathToFollow, tileSize);
