@@ -63,10 +63,10 @@ GameState currentGameState;
 void setup() {
   
   pixelDensity(1);
-  size(900,600);
+  size(1280,720);
   
   // Load images
-  map = loadImage("demo-map.png");
+  map = loadImage("demo-map-2.png");
   
   
   buttons_w_text_ref_img = loadImage("options-6.png");
@@ -97,7 +97,7 @@ void setup() {
   title_enter_gif.loop();
   
   // Tilemap setup
-  tileSize = 25;
+  tileSize = 40;
   cols = width/tileSize;
   rows = height/tileSize;
   

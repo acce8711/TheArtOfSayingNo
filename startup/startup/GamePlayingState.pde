@@ -24,17 +24,17 @@ class GamePlayingState extends GameState {
     //cerate rooms
     rooms = new ArrayList<RoomInformation>();
     //top left room
-    rooms.add(new RoomInformation(275, 525, 50, 175));
+    rooms.add(new RoomInformation(80, 380, 60, 260));
     //top right room
-    rooms.add(new RoomInformation(600, 725, 100, 225));
+    rooms.add(new RoomInformation(480, 700, 180, 300));
     //middle left room
-    rooms.add(new RoomInformation(75, 275, 225, 350));
+    rooms.add(new RoomInformation(840, 1100, 80, 260));
     //middle room
-    rooms.add(new RoomInformation(375, 500, 250, 350));
+    rooms.add(new RoomInformation(120, 300, 300, 540));
     //middle right room
-    rooms.add(new RoomInformation(600, 750, 275, 450));
+    rooms.add(new RoomInformation(380, 800, 380, 560));
     //bottom middle room
-    rooms.add(new RoomInformation(225, 575, 400, 550));
+    rooms.add(new RoomInformation(900, 1100, 340, 540));
     
     //spawn character
     mainCharacter = new Character(loadImage("cat_food_sprite.png"), new PVector(random(rooms.get(0).min_x + NPC_HALF_WIDTH, rooms.get(0).max_x - NPC_HALF_WIDTH), 
@@ -58,6 +58,7 @@ class GamePlayingState extends GameState {
   
   
   void updateState() {
+    image(map,0,0, width, height);
     for (Node n : graph.nodes) {
       n.display();
     }
