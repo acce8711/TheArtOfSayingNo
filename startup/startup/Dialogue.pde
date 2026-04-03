@@ -35,6 +35,11 @@ class Dialogue {
     questions.append("CAN YOU DO MY CHORES FOR ME?");
     questions.append("CAN YOU DO MY HOMEWORK? I'M BUSY.");
     questions.append("WOULD YOU LIKE TO GO ON A DATE?");
+    questions.append("WOULD YOU LIKE TO TEAM UP?");
+    questions.append("CAN YOU BUY ME LUNCH?");
+    questions.append("CAN YOU CLEAN UP FOR ME? I GOT TO GO.");
+    questions.append("HI. WANT TO BE BESTIES?");
+
     
     numQuestions = questions.size();
     

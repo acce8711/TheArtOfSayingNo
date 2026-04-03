@@ -156,6 +156,25 @@ void keyPressed() {
   {
     HideNoPanelWithRandomQuestion();
   }
+  
+  if (key == '0') {
+    dialogue.setUnlockedNum(0);
+  }
+  if (key == '1') {
+    dialogue.setUnlockedNum(1);
+  }
+  if (key == '2') {
+      dialogue.setUnlockedNum(2);
+  }
+  if (key == '3') {
+      dialogue.setUnlockedNum(3);
+  }
+  if (key == '4') {
+      dialogue.setUnlockedNum(4);
+  }
+  if (key == '5') {
+    dialogue.setUnlockedNum(5);
+  }
 }
 
 void DisplayNoPanelWithRandomQuestion()
