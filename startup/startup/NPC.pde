@@ -41,7 +41,11 @@ class NPC extends Character{
     currentState.updateState(this);
     
     imageMode(CENTER);
-    image(character_img, location.x, location.y);
+    if (velocity.mag() > 0) {
+      image(npc_walking_gif, location.x, location.y, tileSize, tileSize);
+    } else {
+      image(npc_idle_gif, location.x, location.y, tileSize, tileSize);
+    }
     imageMode(CORNER);
  }
   
