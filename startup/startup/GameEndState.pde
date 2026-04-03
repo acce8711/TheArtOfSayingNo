@@ -8,6 +8,7 @@ class GameEndState extends GameState {
   }
   
   void updateState() {
+    background(0);
   }
  
 }
