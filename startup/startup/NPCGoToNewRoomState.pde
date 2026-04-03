@@ -1,4 +1,4 @@
-class NPCGoToNewRoomState extends NPC_State {
+class NPCGoToNewRoomState extends NPCState {
   
   // Path to follow
   ArrayList<Edge> pathToFollow;
@@ -23,6 +23,11 @@ class NPCGoToNewRoomState extends NPC_State {
     if(time_elapsed > 1000){
       print(time_elapsed);
       npc.is_dead = true;
+      decrementNPCCount();
+      
+      if(npcsLeft == 0) {
+        destroyWalls();
+      }
     }
     else
       npc.followAStarPath(pathToFollow, tileSize);

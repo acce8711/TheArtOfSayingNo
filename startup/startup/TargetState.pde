@@ -1,4 +1,4 @@
-class TargetState extends NPC_State {
+class TargetState extends NPCState {
   
   // Path to follow
   ArrayList<Edge> pathToFollow;
@@ -10,8 +10,9 @@ class TargetState extends NPC_State {
   
   void updateState(NPC npc) {
     if(npc.CheckIfNearPlayer()){
-      //npc.switchState(new NPCIdleState());
-      npc.switchState(new NPCGoToNewRoomState());
+      npc.switchState(new NPCIdleState());
+      if(currentGameState instanceof GamePlayingState)
+        waitingForPlayerNoInput = true;
     }
     else if(time_elapsed >= 1000) {
       createFollowPath(npc);

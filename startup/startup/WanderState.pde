@@ -1,4 +1,4 @@
-class WanderState extends NPC_State {
+class WanderState extends NPCState {
   
   float time_before_target;
   void enterState(NPC npc) {

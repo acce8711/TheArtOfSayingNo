@@ -2,7 +2,7 @@ class NPC extends Character{
   
   int currentRoomIndex;
   RoomInformation room;
-  NPC_State currentState;
+  NPCState currentState;
   boolean is_dead;
   
   NPC(int roomIndex, RoomInformation room, PVector spawnLocation) {
@@ -14,7 +14,7 @@ class NPC extends Character{
     this.room = room;
   }
   
-  void switchState(NPC_State state) {
+  void switchState(NPCState state) {
     currentState = state;
     state.enterState(this);
   }

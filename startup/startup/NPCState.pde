@@ -1,4 +1,4 @@
-abstract class NPC_State {
+abstract class NPCState {
 
   abstract void enterState(NPC npc);
   

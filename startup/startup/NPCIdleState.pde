@@ -1,4 +1,4 @@
-class NPCIdleState extends NPC_State {
+class NPCIdleState extends NPCState {
   
   // Path to follow
   ArrayList<Edge> pathToFollow;
@@ -9,6 +9,9 @@ class NPCIdleState extends NPC_State {
   }
   
   void updateState(NPC npc) {
+    //exit idle state once player has selected a no
+    if(!waitingForPlayerNoInput)
+      npc.switchState(new NPCGoToNewRoomState());
   }
 
   
