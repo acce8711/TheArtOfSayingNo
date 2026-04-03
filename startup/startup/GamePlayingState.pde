@@ -52,6 +52,8 @@ class GamePlayingState extends GameState {
       }
     }
     
+    //hide dialogue panel by default
+    HideNoPanelWithRandomQuestion();
   }
   
   
@@ -66,6 +68,8 @@ class GamePlayingState extends GameState {
     mainCharacter.display();
     
     time_elapsed = millis() - start_time;
+    
+    dialogue.display();
   }
   
 }

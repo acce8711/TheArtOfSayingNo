@@ -71,7 +71,6 @@ void setup() {
   
   buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
-  car_img = loadImage("ccar.png");
   
   // Load fonts
   dialogue_font = createFont("Jersey10-Regular.ttf", 48);
@@ -113,10 +112,7 @@ void setup() {
 }
 
 void draw() {
-  
   currentGameState.updateState();
-  
-  dialogue.display();
 }
 
 
@@ -144,30 +140,37 @@ RoomInformation GeRandomRoom(int curr_room){
   return rooms.get(room_index);
 }
 
-void keyPressed () {
-  if (key == ' ') {
-    dialogue.toggleVisibility();
-  }
-  if (key == 'v') {
-    dialogue.randomiseQuestion();
-  }
-}
-
 void setPlayerFollowing(boolean is_following){
   npc_following_player = is_following;
 }
 
 void keyPressed() {
+  
   if (key == ENTER && (currentGameState instanceof GameStartState || currentGameState instanceof GameEndState)) {
     print("hello");
     switchGameState(new GamePlayingState());
   }
   
   //this is a temporary space key that hides the "no" panel and continues the game
-  if (key == ' ' && currentGameState instanceof GamePlayingState)
+  if ((key == 'q' || key == 'Q') && currentGameState instanceof GamePlayingState && waitingForPlayerNoInput)
   {
-    waitingForPlayerNoInput = false;
+    HideNoPanelWithRandomQuestion();
   }
+}
+
+void DisplayNoPanelWithRandomQuestion()
+{
+  if(!(currentGameState instanceof GamePlayingState))
+    return;
+  waitingForPlayerNoInput = true;
+  dialogue.showDialogueBox();
+  dialogue.randomiseQuestion();
+}
+
+void HideNoPanelWithRandomQuestion()
+{
+  waitingForPlayerNoInput = false;
+  dialogue.hideDialogueBox();
 }
 
 void resetTime(){

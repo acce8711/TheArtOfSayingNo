@@ -11,8 +11,6 @@ class TargetState extends NPCState {
   void updateState(NPC npc) {
     if(npc.CheckIfNearPlayer()){
       npc.switchState(new NPCIdleState());
-      if(currentGameState instanceof GamePlayingState)
-        waitingForPlayerNoInput = true;
     }
     else if(time_elapsed >= 1000) {
       createFollowPath(npc);
