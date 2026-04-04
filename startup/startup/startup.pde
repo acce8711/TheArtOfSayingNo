@@ -38,6 +38,10 @@ Gif npc_walking_gif;
 Gif title_load_gif;
 Gif title_enter_gif;
 
+Perlin perlin;
+PGraphics floorTexture;
+PGraphics wallTexture;
+
 int start_time;
 int time_elapsed;
 
@@ -58,52 +62,101 @@ final int NEAR_PLAYER_RADIUS = 40;
 GameState currentGameState;
 
 void setup() {
-  
+
   pixelDensity(1);
-  size(1280,720);
-  
+  size(1280, 720);
+
   // Load images
   map = loadImage("demo-map-2.png");
-  
+
   buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
-  
+
   // Load fonts
   dialogue_font = createFont("Jersey10-Regular.ttf", 48);
   actions_font = createFont("Jersey10-Regular.ttf", 24);
-  
+
   // Load GIFs
   mc_idle_gif = new Gif(this, "mc-idle.gif");
   mc_idle_gif.loop();
-  
+
   mc_walking_gif = new Gif(this, "mc-walk.gif");
   mc_walking_gif.loop();
-  
+
   npc_idle_gif = new Gif(this, "npc-idle.gif");
   npc_idle_gif.loop();
-  
+
   npc_walking_gif = new Gif(this, "npc-walking.gif");
   npc_walking_gif.loop();
-  
+
   title_load_gif = new Gif(this, "title-load.gif");
   title_load_gif.ignoreRepeat();
   title_load_gif.play();
-  
+
   title_enter_gif = new Gif(this, "title-enter.gif");
   title_enter_gif.loop();
-  
+
   // Tilemap setup
   tileSize = 40;
   cols = width/tileSize;
   rows = height/tileSize;
-  
+
   // Dialogue setup
   dialogue = new Dialogue(160);
-  
+
   // Dialogue setup
   dialogue = new Dialogue(160);
-  
-  
+
+  int textureBlockSize = 4;
+  perlin = new Perlin(500);
+  floorTexture = createGraphics(tileSize, tileSize);
+  wallTexture = createGraphics(tileSize, tileSize);
+
+  for (int x = 0; x < tileSize; x+=textureBlockSize) {
+    for (int y = 0; y < tileSize; y+=textureBlockSize) {
+      float val = perlin.octaveNoise(x + random(1, 10), y, 0.5, 8, 0.5);
+      val = map(val, 0, 1, 0, 255);
+      float greyscale = 180;
+      if (val < 80) {
+        greyscale = 200;
+      } else if (val < 100) {
+        greyscale = 220;
+      } else if (val < 120) {
+        greyscale = 240;
+      } else {
+        greyscale = 255;
+      }
+
+      floorTexture.beginDraw();
+      floorTexture.fill(greyscale);
+      floorTexture.stroke(greyscale);
+      floorTexture.rect(x, y, textureBlockSize, textureBlockSize);
+      floorTexture.endDraw();
+    }
+  }
+
+  for (int x = 0; x < tileSize; x+=textureBlockSize-1) {
+    for (int y = 0; y < tileSize; y+=textureBlockSize-1) {
+      float val = perlin.octaveNoise(x + random(1, 10), y, 0.4, 8, 0.45);
+      val = map(val, 0, 1, 0, 255);
+      float greyscale = 100;
+      if (val < 80) {
+        greyscale = 80;
+      } else if (val < 100) {
+        greyscale = 50;
+      } else if (val < 120) {
+        greyscale = 20;
+      } else {
+        greyscale = 0;
+      }
+
+      wallTexture.beginDraw();
+      wallTexture.fill(greyscale);
+      wallTexture.stroke(greyscale);
+      wallTexture.rect(x, y, textureBlockSize, textureBlockSize);
+      wallTexture.endDraw();
+    }
+  }
   switchGameState(new GameStartState());
 }
 

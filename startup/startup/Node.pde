@@ -16,15 +16,16 @@ class Node {
     
     position = new PVector(x, y);
     size = mSize;
-    
   }
   
   void display() {
     rectMode(CORNER);
     fill(fillcolor);
-    rect(position.x, position.y, size, size);
-    
-    
+    if (!block) {
+      image(floorTexture, position.x, position.y, size, size);
+    } else {
+      image(wallTexture, position.x, position.y, size, size);
+    }
   }
   
   void showEdges() {

@@ -14,7 +14,7 @@ class GamePlayingState extends GameState {
       PVector loc = n.getTileCenter();
       if (get(int(loc.x), int(loc.y)) == color(0,0,0)) {
         n.block();
-        n.fillcolor = color(0, 255 ,0);
+        n.fillcolor = color(0, 0, 0);
       } else {
         n.fillcolor = color(255);
       } 
