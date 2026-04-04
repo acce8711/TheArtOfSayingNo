@@ -26,9 +26,6 @@ PImage option_5_img;
 PImage buttons_w_text_ref_img;
 PImage buttons_img;
 
-//
-PImage car_img;
-
 // Fonts
 PFont dialogue_font;
 PFont actions_font;
@@ -67,7 +64,6 @@ void setup() {
   
   // Load images
   map = loadImage("demo-map-2.png");
-  
   
   buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
