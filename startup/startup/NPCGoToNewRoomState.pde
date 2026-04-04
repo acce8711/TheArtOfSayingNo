@@ -20,7 +20,7 @@ class NPCGoToNewRoomState extends NPCState {
   
   void updateState(NPC npc) {
     imageMode(CENTER);
-    image(npc_walking_gif, npc.location.x, npc.location.y, tileSize, tileSize);
+    image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
     imageMode(CORNER);
     
     //explode npc after 1 second

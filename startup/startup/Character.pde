@@ -1,3 +1,5 @@
+import gifAnimation.*;
+
 //code taken from A3 
 
 class Character {
@@ -16,17 +18,19 @@ class Character {
   
   int segment;
   
-  PImage character_img;
+  Gif idle_anim;
+  Gif walking_anim;
   
   boolean canMove;
 
-  Character(PImage character_image, PVector startPos) {
+  Character(Gif new_idle_anim, Gif new_walking_anim, PVector startPos) {
     
     location = startPos;
     velocity = new PVector(0,0);
     acceleration = new PVector(0,0);
     topspeed = 0.5;
-    character_img = character_image;
+    idle_anim = new_idle_anim;
+    walking_anim = new_walking_anim;
     canMove = true;
   }
   
@@ -60,8 +64,9 @@ class Character {
   **/
   void display() {
     
+    // TODO - for Qing: Must update to handle switching to the walking_anim when in movement
     imageMode(CENTER);
-    image(character_img, location.x, location.y);
+    image(idle_anim, location.x, location.y - 10, tileSize + 15, tileSize + 15);
     imageMode(CORNER);
 
   }

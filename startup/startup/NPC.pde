@@ -6,7 +6,7 @@ class NPC extends Character{
   boolean is_dead;
   
   NPC(int roomIndex, RoomInformation room, PVector spawnLocation) {
-    super(loadImage("npc_placeholder.png"), spawnLocation);
+    super(npc_idle_gif, npc_walking_gif, spawnLocation);
     currentState = new WanderState();
     currentState.enterState(this);
     currentRoomIndex = roomIndex;

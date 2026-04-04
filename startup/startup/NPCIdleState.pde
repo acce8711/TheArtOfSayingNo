@@ -11,7 +11,7 @@ class NPCIdleState extends NPCState {
   
   void updateState(NPC npc) {
     imageMode(CENTER);
-    image(npc_idle_gif, npc.location.x, npc.location.y, tileSize, tileSize);
+    image(npc.idle_anim, npc.location.x, npc.location.y, tileSize, tileSize);
     imageMode(CORNER);
     //exit idle state once player has selected a no
     if(!waitingForPlayerNoInput)
