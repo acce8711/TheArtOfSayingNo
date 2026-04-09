@@ -5,12 +5,13 @@ class GamePlayingState extends GameState {
     waitingForPlayerNoInput = false;
     start_time = millis();
     image(map,0,0, width, height);
-  
+      me = new MapErosion();
+
     //create graph
     graph = new Graph();
     graph.initialize(width, height, tileSize);
     
-      for (Node n : graph.nodes) {
+    for (Node n : graph.nodes) {
       PVector loc = n.getTileCenter();
       if (get(int(loc.x), int(loc.y)) == color(0,0,0)) {
         n.block();
@@ -58,10 +59,12 @@ class GamePlayingState extends GameState {
   
   
   void updateState() {
-    image(map,0,0, width, height);
+    //image(map,0,0, width, height);
     for (Node n : graph.nodes) {
       n.display();
     }
+    
+
     for (NPC npc : npcs){
       if(!npc.is_dead)
         npc.updateNPC();

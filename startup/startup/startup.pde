@@ -8,6 +8,8 @@ int tileSize;
 boolean npc_following_player;
 boolean waitingForPlayerNoInput;
 Dialogue dialogue;
+MapErosion me;
+
 
 // Map image
 PImage map;
@@ -164,6 +166,13 @@ void draw() {
   currentGameState.updateState();
 }
 
+void mousePressed() {
+  if (currentGameState instanceof GamePlayingState) {
+    me.iterate();
+
+  }
+}
+
 
 int GetRoomAtTile(PVector tile_center){
   int room_index_at_tile = -1;
@@ -198,6 +207,10 @@ void keyPressed() {
   if (key == ENTER && (currentGameState instanceof GameStartState || currentGameState instanceof GameEndState)) {
     print("hello");
     switchGameState(new GamePlayingState());
+  }
+  
+  if (key == 'e' && currentGameState instanceof GameEndState) {
+     //
   }
   
   //this is a temporary space key that hides the "no" panel and continues the game
