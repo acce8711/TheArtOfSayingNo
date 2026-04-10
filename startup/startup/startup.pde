@@ -20,17 +20,21 @@ PlayerState playerState;
 PImage npc_dialogue_img;
 
 // "No" option images
-PImage option_1_img;
-PImage option_2_img;
-PImage option_3_img;
-PImage option_4_img;
-PImage option_5_img;
 PImage buttons_w_text_ref_img;
 PImage buttons_img;
+PImage no_sorry_img;
+PImage no_thanks_img;
+PImage no_img;
+PImage no_exc_img;
+PImage hell_no_img;
+PImage fuck_no_img;
+
+PImage npc_question_img;
 
 // Fonts
 PFont dialogue_font;
 PFont actions_font;
+PFont ui_font;
 
 // Animations
 Gif mc_idle_gif;
@@ -81,6 +85,13 @@ void setup() {
 
   buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
+  npc_question_img = loadImage("npc-question.png");
+  no_sorry_img = loadImage("no-sorry.png");
+  no_thanks_img = loadImage("no-thanks.png");
+  no_img = loadImage("no.png");
+  no_exc_img = loadImage("no-exc.png");
+  hell_no_img = loadImage("hell-no.png");
+  fuck_no_img = loadImage("fuck-no.png");
 
   // Load fonts
   dialogue_font = createFont("Jersey10-Regular.ttf", 48);

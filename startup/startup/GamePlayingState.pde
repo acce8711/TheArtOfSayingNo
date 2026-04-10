@@ -1,4 +1,7 @@
 class GamePlayingState extends GameState {  
+  PVector player_pos;
+  PVector current_asking_npc_pos;
+  
   void enterState() {
     println("Entered GamePlayingState state");
     npc_following_player = false;
@@ -54,6 +57,8 @@ class GamePlayingState extends GameState {
     mainPathToFollow = null;
     switchPlayerState(new PlayerMovingState());
     
+    player_pos = mainCharacter.location;
+    
     //create npcs
     npcs = new ArrayList<NPC>();
     //loop through rooms except for starter room
@@ -89,6 +94,8 @@ class GamePlayingState extends GameState {
     mainCharacter.display();
     
     time_elapsed = millis() - start_time;
+    
+    image(fuck_no_img, player_pos.x - fuck_no_img.width / 2, player_pos.y - fuck_no_img.height - 10);
     
     if (ps.particles.size() < 40 && ps.isActive == true) {
       ps.addParticle();
