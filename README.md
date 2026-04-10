@@ -7,7 +7,8 @@ _____
 
 ### How to Run 🏃
 1. Download the project and open in Processing.
-2. From the intro state, click ENTER to start the game.
+2. Install the GifAnimation library under Tools --> Manage Tools --> libraries
+3. From the intro state, click ENTER to start the game.
 
 ### The Controls ⌨️
 1. Mouse: Point and Click to set the locations for main character
