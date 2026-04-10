@@ -1,4 +1,4 @@
-class GamePlayingState extends GameState {
+class GamePlayingState extends GameState {  
   void enterState() {
     println("Entered GamePlayingState state");
     npc_following_player = false;
@@ -9,6 +9,9 @@ class GamePlayingState extends GameState {
     //create graph
     graph = new Graph();
     graph.initialize(width, height, tileSize);
+    
+    //init particle system
+    ps = new ParticleSystem(new PVector(width/2,height/2));
     
       for (Node n : graph.nodes) {
       PVector loc = n.getTileCenter();
@@ -38,7 +41,12 @@ class GamePlayingState extends GameState {
     
     //spawn character
     mainCharacter = new Character(mc_idle_gif, mc_walking_gif, new PVector(random(rooms.get(0).min_x + NPC_HALF_WIDTH, rooms.get(0).max_x - NPC_HALF_WIDTH), 
-                                                                                random(rooms.get(0).min_y + NPC_HALF_HEIGHT, rooms.get(0).max_y - NPC_HALF_HEIGHT)));
+                                                                                random(rooms.get(0).min_y + NPC_HALF_HEIGHT, rooms.get(0).max_y - NPC_HALF_HEIGHT)));                                                                           
+    mainCharacter.topspeed = 1.5;
+    mainCharacter.maxforce = 0.15;
+    mainPathToFollow = null;
+    switchPlayerState(new PlayerMovingState());
+    
     //create npcs
     npcs = new ArrayList<NPC>();
     //loop through rooms except for starter room
@@ -56,9 +64,9 @@ class GamePlayingState extends GameState {
     HideNoPanelWithRandomQuestion();
   }
   
-  
   void updateState() {
     image(map,0,0, width, height);
+    updateCursorForWalkable();
     for (Node n : graph.nodes) {
       n.display();
     }
@@ -66,10 +74,36 @@ class GamePlayingState extends GameState {
       if(!npc.is_dead)
         npc.updateNPC();
     }
+    if (playerState != null) {
+      playerState.update(mainCharacter);
+    } else {
+      mainCharacter.update();
+    }
     mainCharacter.display();
     
     time_elapsed = millis() - start_time;
     
+    if (ps.particles.size() < 40 && ps.isActive == true) {
+      ps.addParticle();
+      
+      if (ps.particles.size() > 39)
+        ps.isActive = false;
+    }
+    
+    ps.run();
+        
+    if(npcsLeft == 0) {
+      int endDelayTime = millis() - npcGoneTime;
+      
+      if (endDelayTime > 2000) {
+        destroyWalls();
+      }
+    }
+    
+    
+    
+    stroke(0);
+    fill(0);
     dialogue.display();
   }
   
