@@ -17,11 +17,13 @@ class NPCGoToNewRoomState extends NPCState {
        npc.topspeed = 2;
     } else {
       npc.topspeed = 0.5;
-      if(starting_room_index == -1)
+      if(starting_room_index >= 0)
       {
-        npc.room = GeRandomRoom(starting_room_index);
-      } else 
-        npc.room = rooms.get(starting_room_index);
+        print("room index: ", starting_room_index);
+        npc.room = rooms.get(starting_room_index);}
+      else {
+        npc.room = rooms.get(0);
+      }
     }
     createFollowPath(npc);
     print(time_elapsed);
@@ -46,15 +48,16 @@ class NPCGoToNewRoomState extends NPCState {
     if(npc.CheckIfNearPlayer() && !waitingForPlayerNoInput){
       npc.switchState(new NPCIdleState());
     }
-    else if(npc.stopped()) {
+    else if(npc.stopped() || starting_room_index != -1) {
        npc.switchState(new WanderState());
     }
-    else
+    else if(pathToFollow != null && pathToFollow.size() > 0)
       npc.followAStarPath(pathToFollow, tileSize);
   }
   
   void goToNewRoomAndExplode(NPC npc){
     //explode npc after 1 second
+    
     if(time_elapsed > 1000){
       npc.is_dead = true;
       decrementNPCCount();
@@ -62,14 +65,16 @@ class NPCGoToNewRoomState extends NPCState {
       ps.isActive = true;  
       npcGoneTime = millis();
     }
-    else
+    else if(pathToFollow != null && pathToFollow.size() > 0)
       npc.followAStarPath(pathToFollow, tileSize);
   }
   
   void createFollowPath(NPC npc){
     Node start = npc.getTile();
     
-    Node end = graph.getTileAtLocation(random(npc.room.min_x+NPC_HALF_WIDTH, npc.room.max_x-NPC_HALF_WIDTH), random(npc.room.min_y+NPC_HALF_HEIGHT, npc.room.max_y-NPC_HALF_HEIGHT));
+    Node end = null;
+    while (end == null)  
+      end = graph.getTileAtLocation((npc.room.min_x + npc.room.max_x)/2, (npc.room.min_y + npc.room.max_y)/2);
 
     ArrayList<Edge> path = graph.astar(start, end);
     

@@ -9,7 +9,7 @@ boolean npc_following_player;
 boolean waitingForPlayerNoInput;
 Dialogue dialogue;
 
-// Map image //<>//
+// Map image //<>// //<>//
 PImage map;
 ArrayList<NPC> npcs;
 Character mainCharacter;
@@ -60,8 +60,8 @@ int npcsLeft;
 
 ArrayList<RoomInformation> rooms;
 
-final int MIN_NPCS_IN_ROOM = 2;
-final int MAX_NPCS_IN_ROOM = 4;
+final int MIN_NPCS_IN_ROOM = 1;
+final int MAX_NPCS_IN_ROOM = 3;
 
 final int NPC_HALF_WIDTH = 25;
 final int NPC_HALF_HEIGHT = 30;
