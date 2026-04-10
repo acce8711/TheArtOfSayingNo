@@ -17,6 +17,7 @@ class GamePlayingState extends GameState {
     graph = new Graph();
     graph.initialize(width, height, tileSize);
     
+    //set the graph nodes to be blocked (walls) or not (floor) based on the displayed map image
     for (Node n : graph.nodes) {
       PVector loc = n.getTileCenter();
       if (get(int(loc.x), int(loc.y)) == color(0,0,0)) {
@@ -78,7 +79,6 @@ class GamePlayingState extends GameState {
   }
   
   void updateState() {
-    image(map,0,0, width, height);
     updateCursorForWalkable();
     
     //update graph
@@ -100,24 +100,29 @@ class GamePlayingState extends GameState {
     
     time_elapsed = millis() - start_time;
     
+    // Update particles and add them while under the limit and while actively adding
     if (ps.particles.size() < 40 && ps.isActive == true) {
       ps.addParticle();
       
+      // Set particle system's isActive to false after reaching limit to stop adding particles
       if (ps.particles.size() > 39)
         ps.isActive = false;
     }
     
+    // Update particle system
     ps.run();
         
     //destroy the walls if all the npcs are gone
     if(npcsLeft == 0) {
-      int endDelayTime = millis() - npcGoneTime;
+      int endDelayTime = millis() - npc_gone_time;
       
+      // After 2 seconds of all npcs being gone, call destroy walls to transition to end game state and start the map deteriotation
       if (endDelayTime > 2000) {
         destroyWalls();
       }
     }
 
+    // Display dialogue box
     stroke(0);
     fill(0);
     dialogue.display();
