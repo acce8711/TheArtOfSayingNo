@@ -30,9 +30,7 @@ _____
 
 ### Contributions 👥
 👤 Amina - NPC Movement & State Machines, Game Manager (Start, Idle, End)\
-👤 Emma - Game UI, Character & NPC Art + Animation, Procedural Texture Generation, Map Erosion Effect, Explosion Effects
+👤 Emma - Game UI, Character & NPC Art + Animation, Procedural Texture Generation, Map Erosion Effect, Explosion Effects\
 👤 Qing - Player Movement & State Machines, Player Action (Point & Click)
-
-<br>
 
 
