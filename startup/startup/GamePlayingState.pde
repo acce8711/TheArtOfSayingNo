@@ -72,6 +72,7 @@ class GamePlayingState extends GameState {
     
     //hide dialogue panel by default
     HideNoPanelWithRandomQuestion();
+    dialogue.setUnlockedNum(0);
   }
   
   void updateState() {
