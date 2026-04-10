@@ -9,7 +9,7 @@ class NPC extends Character{
   
   NPC(int roomIndex, RoomInformation room, PVector spawnLocation, int npc_index) {
     super(npc_idle_gif, npc_walking_gif, spawnLocation, false, tileSize);
-    currentState = new WanderState();
+    currentState = new NPCWanderState();
     currentState.enterState(this);
     currentRoomIndex = roomIndex;
     is_dead = false;

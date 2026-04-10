@@ -24,7 +24,7 @@ class NPCWanderState extends NPCState {
       setPlayerFollowing(true);
       resetTime();
       //targeting_npc_index = npc.index;
-      npc.switchState(new TargetState());
+      npc.switchState(new NPCTargetState());
       print(npc.index);
     } 
     else {

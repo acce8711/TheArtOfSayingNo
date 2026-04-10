@@ -50,7 +50,7 @@ class NPCGoToNewRoomState extends NPCState {
       npc.switchState(new NPCIdleState());
     }
     else if(npc.stopped() || starting_room_index != -1) {
-       npc.switchState(new WanderState());
+       npc.switchState(new NPCWanderState());
     }
     else if(pathToFollow != null && pathToFollow.size() > 0)
       npc.followAStarPath(pathToFollow, tileSize);
