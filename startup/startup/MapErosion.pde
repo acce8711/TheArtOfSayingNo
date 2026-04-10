@@ -3,10 +3,6 @@ class MapErosion {
   int cols, rows;
   int tileSize;
   
-  final color WHITE = color(255,255,255);
-  final color BLACK = color(0,0,0);
-  //PImage map;
-  
   MapErosion() {
   
     size(1280, 720);
@@ -17,21 +13,18 @@ class MapErosion {
     rows = height/tileSize;
     grid = new int[cols][rows];
     
-    //image(map, 0, 0);
     for (int x = 0; x < cols; x++) {
       for (int y = 0; y < rows; y++) {
         color c = get(x * tileSize, y * tileSize);
-        if (c == BLACK) {
+        float brightness = brightness(c);
+        if (brightness <= 100) {
           grid[x][y] = 0;
-        } else if (c == WHITE) {
+        } else {
           grid[x][y] = 255;
         }
       }
     }
     
-    //for (int i = 0; i < 15; i++) {
-    //  grid = runCA();
-    //}
     drawGrid();
   }
   
@@ -40,7 +33,8 @@ class MapErosion {
     for (int x = 0; x < cols; x++) {
       for (int y = 0; y < rows; y++) {
         color c = get(x * tileSize, y * tileSize);
-        if (c == BLACK) {
+        float brightness = brightness(c);
+        if (brightness <= 100) {
           hasBlackTile = true;
         }
       }
@@ -54,10 +48,8 @@ class MapErosion {
       for (int y = 0; y < rows; y++) {
         if (grid[x][y] == 255) {
           image(floorTexture, x * tileSize, y * tileSize, tileSize, tileSize);
-          continue;
         } else if (grid[x][y] == 0) {
           fill(color(grid[x][y]));
-          //rect(x*tileSize, y*tileSize, tileSize, tileSize);
           image(wallTexture, x * tileSize, y * tileSize, tileSize, tileSize);
         }
       }
@@ -72,15 +64,6 @@ class MapErosion {
   int[][] runCA() {
   
     int[][] tempGrid = new int[cols][rows];
-    //for (int x = 0; x < cols; x++) {
-    //  for (int y = 0; y < rows; y++) {
-    //    if (grid[x][y] == 255) {
-    //      tempGrid[x][y] = 0;
-    //    } else {
-    //      tempGrid[x][y] = 255;
-    //    }
-    //  }
-    //}
     
     for (int x = 0; x < cols; x++) {
       for (int y = 0; y < rows; y++) {
@@ -94,7 +77,6 @@ class MapErosion {
             if (inTheGrid(newX, newY)) {
               if (!((i == 0) && (j == 0))) {
                 if (grid[newX][newY] == 255){
-                //  print(" " + grid[x][y] + " ");
                   count++;
                 }
               } 
@@ -103,14 +85,11 @@ class MapErosion {
             }
           }
         }
-        //print(" " + count + " ");
-        //if (x == 0 || y == 0 || x == rows -1 || y == cols - 1) {
-        //  continue;
-        //}
+
         if (count >= 1) {
           float rand = random(0,1);
           tempGrid[x][y] = 255;
-          if (rand < 0.5 && grid[x][y] != 255) {
+          if (rand < 0.6 && grid[x][y] != 255) {
             tempGrid[x][y] = 0;
           } else {
             tempGrid[x][y] = 255;
