@@ -49,7 +49,7 @@ class GamePlayingState extends GameState {
     
     //spawn character
     mainCharacter = new Character(mc_idle_gif, mc_walking_gif, new PVector(random(rooms.get(0).min_x + NPC_HALF_WIDTH, rooms.get(0).max_x - NPC_HALF_WIDTH), 
-                                                                                random(rooms.get(0).min_y + NPC_HALF_HEIGHT, rooms.get(0).max_y - NPC_HALF_HEIGHT)));                                                                           
+                                                                                random(rooms.get(0).min_y + NPC_HALF_HEIGHT, rooms.get(0).max_y - NPC_HALF_HEIGHT)), true, tileSize+15);                                                                           
     mainCharacter.topspeed = 1.5;
     mainCharacter.maxforce = 0.15;
     mainPathToFollow = null;

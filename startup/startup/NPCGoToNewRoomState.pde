@@ -30,12 +30,13 @@ class NPCGoToNewRoomState extends NPCState {
     
     setPlayerFollowing(false);
     resetTime();
+    npc.setIsIdle(false);
   }
   
   void updateState(NPC npc) {
-    imageMode(CENTER);
-    image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
-    imageMode(CORNER); 
+    //imageMode(CENTER);
+    //image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
+    //imageMode(CORNER); 
     
     if(npc.readyToExplode)
       goToNewRoomAndExplode(npc);

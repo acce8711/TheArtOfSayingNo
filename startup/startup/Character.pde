@@ -18,12 +18,15 @@ class Character {
   
   int segment;
   
+  float characterSize;
+  
   Gif idle_anim;
   Gif walking_anim;
   
   boolean canMove;
+  boolean idle;
 
-  Character(Gif new_idle_anim, Gif new_walking_anim, PVector startPos) {
+  Character(Gif new_idle_anim, Gif new_walking_anim, PVector startPos, boolean is_idle, float mCharacterSize) {
     
     location = startPos;
     velocity = new PVector(0,0);
@@ -32,6 +35,8 @@ class Character {
     idle_anim = new_idle_anim;
     walking_anim = new_walking_anim;
     canMove = true;
+    idle = is_idle;
+    characterSize = mCharacterSize;
   }
   
   
@@ -65,9 +70,16 @@ class Character {
   void display() {
     
     imageMode(CENTER);
-    image(walking_anim, location.x, location.y - 10, tileSize + 15, tileSize + 15);
+    if(idle)
+      image(idle_anim, location.x, location.y - 10, characterSize, characterSize);
+    else
+      image(walking_anim, location.x, location.y - 10, characterSize, characterSize);
     imageMode(CORNER);
 
+  }
+  
+  void setIsIdle(boolean isIdle){
+    idle = isIdle;
   }
   
   /*

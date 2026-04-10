@@ -6,6 +6,7 @@ class PlayerInteractingState extends PlayerState {
     player.acceleration.mult(0);
     mainPathToFollow = null;
     DisplayNoPanelWithRandomQuestion();
+    player.setIsIdle(true);
   }
 
 //Return to moving once interaction is done

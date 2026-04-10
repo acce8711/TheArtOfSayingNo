@@ -31,7 +31,7 @@ class NPCTargetState extends NPCState {
   }
   
   void createFollowPath(NPC npc){
-    Node start = npc.getTile(); //<>//
+    Node start = npc.getTile(); //<>// //<>//
     
     Node end = mainCharacter.getTile();
     

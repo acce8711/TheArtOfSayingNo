@@ -9,7 +9,7 @@ boolean npc_following_player;
 boolean waitingForPlayerNoInput;
 Dialogue dialogue;
 
-// Map image //<>// //<>//
+// Map image //<>// //<>// //<>//
 PImage map;
 ArrayList<NPC> npcs;
 Character mainCharacter;

@@ -9,12 +9,13 @@ class NPCIdleState extends NPCState {
     switchPlayerState(new PlayerInteractingState());
     setPlayerFollowing(false);
     DisplayNoPanelWithRandomQuestion();
+    npc.setIsIdle(true);
   }
   
   void updateState(NPC npc) {
-    imageMode(CENTER);
-    image(npc.idle_anim, npc.location.x, npc.location.y, tileSize, tileSize);
-    imageMode(CORNER);
+    //imageMode(CENTER);
+    //image(npc.idle_anim, npc.location.x, npc.location.y, tileSize, tileSize);
+    //imageMode(CORNER);
     //exit idle state once player has selected a no
     if(!waitingForPlayerNoInput){
       npc.readyToExplode = true;

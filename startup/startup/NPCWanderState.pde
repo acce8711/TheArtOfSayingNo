@@ -1,15 +1,16 @@
-class WanderState extends NPCState {
+class NPCWanderState extends NPCState {
   
   float time_before_target;
   void enterState(NPC npc) {
     println("Entered Wander state");
     time_before_target = random(2000,3000);
+    npc.setIsIdle(false);
   }
   
   void updateState(NPC npc) {
-    imageMode(CENTER);
-    image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
-    imageMode(CORNER);
+    //imageMode(CENTER);
+    //image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
+    //imageMode(CORNER);
     
     if(npc.CheckIfNearPlayer() && !waitingForPlayerNoInput)
     {

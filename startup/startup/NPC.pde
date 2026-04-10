@@ -8,7 +8,7 @@ class NPC extends Character{
   boolean readyToExplode;
   
   NPC(int roomIndex, RoomInformation room, PVector spawnLocation, int npc_index) {
-    super(npc_idle_gif, npc_walking_gif, spawnLocation);
+    super(npc_idle_gif, npc_walking_gif, spawnLocation, false, tileSize);
     currentState = new WanderState();
     currentState.enterState(this);
     currentRoomIndex = roomIndex;
@@ -43,6 +43,7 @@ class NPC extends Character{
   void updateNPC()
   {
     super.update();
+    super.display();
     
     currentState.updateState(this);
  }
