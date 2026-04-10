@@ -6,7 +6,7 @@ _____
 <img width="1277" height="712" alt="the art of saying no gameplay" src="https://github.com/user-attachments/assets/ddec569a-9615-452b-970c-865941595455" />
 
 ### How to Run 🏃
-1. Download the project and open in processing.
+1. Download the project and open in Processing.
 2. From the intro state, click ENTER to start the game.
 
 ### The Controls ⌨️
