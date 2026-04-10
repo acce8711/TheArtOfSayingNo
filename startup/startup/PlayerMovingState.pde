@@ -4,6 +4,7 @@ class PlayerMovingState extends PlayerState {
   }
 
   void update(Character player) {
+    //Follow A* path when clicked
     if (mainPathToFollow != null && mainPathToFollow.size() > 0) {
       player.followAStarPath(mainPathToFollow, tileSize);
     }
