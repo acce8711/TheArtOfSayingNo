@@ -84,6 +84,7 @@ class Dialogue {
       return;
     }
     
+    rectMode(CORNER);
     fill(255);
     // White box
     rect(0, height-h, width, h);
