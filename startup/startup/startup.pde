@@ -9,8 +9,7 @@ final int NPC_HALF_WIDTH = 25;
 final int NPC_HALF_HEIGHT = 30;
 
 final int NEAR_PLAYER_RADIUS = 40;
- //<>// //<>//
-final int NPC_WALL_AVOID_RADIUS = 10;
+final int NPC_WALL_AVOID_RADIUS = 10; //<>//
 
 final float NPC_SLOW_SPEED = 0.5;
 final float NPC_MEDIUM_SPEED = 1.5;
@@ -24,8 +23,8 @@ boolean npc_following_player;
 boolean waitingForPlayerNoInput;
 Dialogue dialogue;
 
-// Map image //<>// //<>// //<>//
-PImage map;
+// Map image
+PImage map; //<>//
 
 // Characters
 ArrayList<NPC> npcs;
