@@ -1,3 +1,5 @@
+//class handles the game end logic
+
 class GameEndState extends GameState {
   MapErosion mapErosion;
   int endTime;
@@ -5,7 +7,7 @@ class GameEndState extends GameState {
 
   void enterState() {
     println("Entered GameEndState state");
-    //Display start screen
+    
     image(generatedMap, 0, 0);
     delay(10);
     mapErosion = new MapErosion();

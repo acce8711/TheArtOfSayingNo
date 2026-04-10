@@ -1,34 +1,33 @@
 class NPCWanderState extends NPCState {
+  float time_before_targeting;
   
-  float time_before_target;
   void enterState(NPC npc) {
     println("Entered Wander state");
-    time_before_target = random(2000,3000);
+    
+    time_before_targeting = random(2000,3000);
+    
+    //animation change to walking
     npc.setIsIdle(false);
   }
   
   void updateState(NPC npc) {
-    //imageMode(CENTER);
-    //image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
-    //imageMode(CORNER);
     
+    //if the npc is near the player and another npc is not currently interacting with the player then ask the player a question
     if(npc.CheckIfNearPlayer() && !waitingForPlayerNoInput)
     {
       setPlayerFollowing(false);
-      //targeting_npc_index = npc.index;
       waitingForPlayerNoInput = true;
       npc.switchState(new NPCIdleState());
     } 
-    else if(!npc_following_player && !waitingForPlayerNoInput && time_elapsed >= time_before_target)
+    //if no npc is following the player and no npc is asking the player 
+    else if(!npc_following_player && !waitingForPlayerNoInput && time_elapsed >= time_before_targeting)
     {
       setPlayerFollowing(true);
       resetTime();
-      //targeting_npc_index = npc.index;
       npc.switchState(new NPCTargetState());
-      print(npc.index);
     } 
+    //wander within the assigned room and avoid walls
     else {
-      //wander within the room and avoid the walls
       PVector wanderForce = npc.wander();
       PVector avoidForce = npc.avoidWall();
       PVector seperateForce = npc.separate(50);

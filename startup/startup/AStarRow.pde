@@ -1,3 +1,5 @@
+//code taken from course content
+
 class AStarRow {
   
   Edge best;
@@ -15,6 +17,4 @@ class AStarRow {
     h = hN;
     f = fN;
   }
-  
-  
 }

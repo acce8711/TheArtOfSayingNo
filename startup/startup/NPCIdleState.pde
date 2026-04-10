@@ -1,28 +1,26 @@
 class NPCIdleState extends NPCState {
   
-  // Path to follow
   ArrayList<Edge> pathToFollow;
 
   void enterState(NPC npc) {
     println("Entered NPCIdleState state");
+   
+    //logic changes
     npc.canMove = false;
     switchPlayerState(new PlayerInteractingState());
     setPlayerFollowing(false);
+    
+    //visual changes
     DisplayNoPanelWithRandomQuestion();
     npc.setIsIdle(true);
   }
   
   void updateState(NPC npc) {
-    //imageMode(CENTER);
-    //image(npc.idle_anim, npc.location.x, npc.location.y, tileSize, tileSize);
-    //imageMode(CORNER);
-    //exit idle state once player has selected a no
+    //exit idle state once player has selected a no and run away to a new room
     if(!waitingForPlayerNoInput){
       npc.readyToExplode = true;
       npc.switchState(new NPCGoToNewRoomState());
     }
-      
   }
 
-  
 }

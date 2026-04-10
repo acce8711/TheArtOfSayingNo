@@ -1,18 +1,21 @@
+//class handles logic when the gameplay starts
+
 class GamePlayingState extends GameState {  
   void enterState() {
     println("Entered GamePlayingState state");
     npc_following_player = false;
     waitingForPlayerNoInput = false;
-    //targeting_npc_index = -1;
     start_time = millis();
+    
+    //display map
     image(map,0,0, width, height);
-  
+   
+    //init particle system
+    ps = new ParticleSystem(new PVector(width/2,height/2));
+    
     //create graph
     graph = new Graph();
     graph.initialize(width, height, tileSize);
-    
-    //init particle system
-    ps = new ParticleSystem(new PVector(width/2,height/2));
     
     for (Node n : graph.nodes) {
       PVector loc = n.getTileCenter();
@@ -29,10 +32,9 @@ class GamePlayingState extends GameState {
     for (Node n : graph.nodes) {
       n.display();
     }
-    
     generatedMap = get();
     
-    //cerate rooms
+    //store information about room boundaries
     rooms = new ArrayList<RoomInformation>();
     //top left room
     rooms.add(new RoomInformation(0, 80, 360, 40, 200));
@@ -63,7 +65,7 @@ class GamePlayingState extends GameState {
       int numNPCsToSpawn = int(random(MIN_NPCS_IN_ROOM, MAX_NPCS_IN_ROOM));
       for(int j = 0; j < numNPCsToSpawn; j++){
         NPC npc_to_add = new NPC(i, rooms.get(i), new PVector(random(rooms.get(i).min_x + NPC_HALF_WIDTH, rooms.get(i).max_x - NPC_HALF_WIDTH), 
-                                                      random(rooms.get(i).min_y + NPC_HALF_HEIGHT, rooms.get(i).max_y - NPC_HALF_HEIGHT)), npcsLeft);
+                                                      random(rooms.get(i).min_y + NPC_HALF_HEIGHT, rooms.get(i).max_y - NPC_HALF_HEIGHT)));
         npcs.add(npc_to_add);
         npc_to_add.maxforce = 0.15;
         npcsLeft++;
@@ -78,13 +80,17 @@ class GamePlayingState extends GameState {
   void updateState() {
     image(map,0,0, width, height);
     updateCursorForWalkable();
+    
+    //update graph
     for (Node n : graph.nodes) {
       n.display();
     }
+    //update npcs
     for (NPC npc : npcs){
       if(!npc.is_dead)
         npc.updateNPC();
     }
+    //update player
     if (playerState != null) {
       playerState.update(mainCharacter);
     } else {
@@ -103,6 +109,7 @@ class GamePlayingState extends GameState {
     
     ps.run();
         
+    //destroy the walls if all the npcs are gone
     if(npcsLeft == 0) {
       int endDelayTime = millis() - npcGoneTime;
       
@@ -110,9 +117,7 @@ class GamePlayingState extends GameState {
         destroyWalls();
       }
     }
-    
-    
-    
+
     stroke(0);
     fill(0);
     dialogue.display();

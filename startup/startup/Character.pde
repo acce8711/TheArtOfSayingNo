@@ -1,6 +1,6 @@
 import gifAnimation.*;
 
-//code taken from A3 
+//code taken from course content
 
 class Character {
   
@@ -65,7 +65,6 @@ class Character {
   
   /**
   Display character
-  //TO DO. probably need to overwrite this method in the classes that extend the NPC class
   **/
   void display() {
     
@@ -210,7 +209,6 @@ class Character {
   /*
   Test if the character has stopped moving
   */
-  //To REMOVE
   boolean stopped() {
     return (velocity.mag() < 0.01);
   }

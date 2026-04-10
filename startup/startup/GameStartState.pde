@@ -1,7 +1,8 @@
+//class dispalys start screen
+
 class GameStartState extends GameState {
   void enterState() {
     println("Entered GameStartState state");
-    //Display start screen
     background(255);
   }
   

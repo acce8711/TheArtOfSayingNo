@@ -1,6 +1,21 @@
 import java.util.Iterator;
 import gifAnimation.*;
 
+//constants
+final int MIN_NPCS_IN_ROOM = 1;
+final int MAX_NPCS_IN_ROOM = 3;
+
+final int NPC_HALF_WIDTH = 25;
+final int NPC_HALF_HEIGHT = 30;
+
+final int NEAR_PLAYER_RADIUS = 40;
+ //<>//
+final int NPC_WALL_AVOID_RADIUS = 10;
+
+final float NPC_SLOW_SPEED = 0.5;
+final float NPC_MEDIUM_SPEED = 1.5;
+final float NPC_FAST_SPEED = 2;
+
 // Global variables
 Graph graph = new Graph();
 int cols, rows;
@@ -9,7 +24,7 @@ boolean npc_following_player;
 boolean waitingForPlayerNoInput;
 Dialogue dialogue;
 
-// Map image //<>// //<>// //<>//
+// Map image //<>// //<>//
 PImage map;
 ArrayList<NPC> npcs;
 Character mainCharacter;
@@ -61,14 +76,6 @@ int npcsLeft;
 
 ArrayList<RoomInformation> rooms;
 
-final int MIN_NPCS_IN_ROOM = 1;
-final int MAX_NPCS_IN_ROOM = 3;
-
-final int NPC_HALF_WIDTH = 25;
-final int NPC_HALF_HEIGHT = 30;
-
-final int NEAR_PLAYER_RADIUS = 40;
-
 GameState currentGameState;
 
 void setup() {
@@ -79,8 +86,7 @@ void setup() {
   
   // Load images
   map = loadImage("demo-map-2.png");
-
-
+  
   buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
 
@@ -180,46 +186,6 @@ void draw() {
 }
 
 
-int GetRoomAtTile(PVector tile_center){
-  int room_index_at_tile = -1;
- 
-  for(int i=0; i< rooms.size(); i++){
-    RoomInformation room = rooms.get(i);
-    if(tile_center.x >= room.min_x && tile_center.x <= room.max_x && tile_center.y >= room.min_y && tile_center.y <= room.max_y)
-    {
-      room_index_at_tile = i;
-      break;
-    }
-  }
-  
-  return room_index_at_tile;
-}
-
-RoomInformation GeRandomRoom(int curr_room){
-
-  int room_index = curr_room;
-  
-  while(room_index == curr_room){
-    room_index = int(random(0, rooms.size()));
-  }
-  
-  return rooms.get(room_index);
-}
-
-void setPlayerFollowing(boolean is_following){
-  npc_following_player = is_following;
-}
-
-void switchPlayerState(PlayerState state) {
-  if (playerState != null && mainCharacter != null) {
-    playerState.exit(mainCharacter);
-  }
-  playerState = state;
-  if (playerState != null && mainCharacter != null) {
-    playerState.enter(mainCharacter);
-  }
-}
-
 void keyPressed() {
   
   //Start or restart game when Enter is pressed
@@ -275,6 +241,49 @@ void mousePressed() {
   mainCharacter.segment = 0;
 }
 
+//returns a room index that corresponds with the passed in tile
+int GetRoomAtTile(PVector tile_center){
+  int room_index_at_tile = -1;
+ 
+  for(int i=0; i< rooms.size(); i++){
+    RoomInformation room = rooms.get(i);
+    if(tile_center.x >= room.min_x && tile_center.x <= room.max_x && tile_center.y >= room.min_y && tile_center.y <= room.max_y)
+    {
+      room_index_at_tile = i;
+      break;
+    }
+  }
+  
+  return room_index_at_tile;
+}
+
+//returns a random room that is different from the one that is passed in
+RoomInformation GeRandomRoom(int curr_room){
+
+  int room_index = curr_room;
+  
+  while(room_index == curr_room){
+    room_index = int(random(0, rooms.size()));
+  }
+  
+  return rooms.get(room_index);
+}
+
+//setter
+void setPlayerFollowing(boolean is_following){
+  npc_following_player = is_following;
+}
+
+void switchPlayerState(PlayerState state) {
+  if (playerState != null && mainCharacter != null) {
+    playerState.exit(mainCharacter);
+  }
+  playerState = state;
+  if (playerState != null && mainCharacter != null) {
+    playerState.enter(mainCharacter);
+  }
+}
+
 //Player to able to click on white/walkable path
 boolean isWalkableAt(int x, int y) {
   if (!(currentGameState instanceof GamePlayingState) || graph == null) {
@@ -302,6 +311,7 @@ void updateCursorForWalkable() {
   }
 }
 
+//displays the question panel
 void DisplayNoPanelWithRandomQuestion()
 {
   if(!(currentGameState instanceof GamePlayingState))
@@ -311,6 +321,7 @@ void DisplayNoPanelWithRandomQuestion()
   dialogue.randomiseQuestion();
 }
 
+//hides the question panel
 void HideNoPanelWithRandomQuestion()
 {
   waitingForPlayerNoInput = false;
@@ -333,16 +344,19 @@ void HandleNoAnswer(int optionIndex) {
   HideNoPanelWithRandomQuestion();
 }
 
+//resets the timer
 void resetTime(){
   start_time = millis();
   time_elapsed = 0;
 }
 
+//switches game state
 void switchGameState(GameState state) {
   currentGameState = state;
   state.enterState();
 }
 
+//removes an NPC from the npc count tracker
 void decrementNPCCount(){
   npcsLeft--;
 }

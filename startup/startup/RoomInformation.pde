@@ -1,3 +1,4 @@
+//class contains index and boundary information about the room
 class RoomInformation {
   int room_index;
   int min_x;

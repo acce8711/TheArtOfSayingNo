@@ -5,43 +5,43 @@ class NPCTargetState extends NPCState {
 
   void enterState(NPC npc) {
     println("Entered Target state");
+    
+    npc.topspeed = NPC_MEDIUM_SPEED;
     createFollowPath(npc);
-    npc.topspeed = 1.5;
+   
+    //animation change to walking
     npc.setIsIdle(false);
   }
   
   void updateState(NPC npc) {
-    //imageMode(CENTER);
-    //image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
-    //imageMode(CORNER);
-    
+    //if nps is not supposed to be following teh player anymore then make it go to a new room and wander there
     if(!npc_following_player) {
        npc.readyToExplode = false;
        npc.switchState(new NPCGoToNewRoomState());
     }
+    //if the npc has reached the player then entr idle state and ask a question
     else if(npc.CheckIfNearPlayer() ){
       npc.switchState(new NPCIdleState());
     }
+    //update the path every second
     else if(time_elapsed >= 1000) {
       createFollowPath(npc);
-      start_time = millis();
-      time_elapsed = 0;
+      resetTime();
     }
     npc.followAStarPath(pathToFollow, tileSize);
   }
   
+  //create a path from the npc to the character
   void createFollowPath(NPC npc){
-    Node start = npc.getTile(); //<>// //<>//
+    Node start = npc.getTile();
     
     Node end = mainCharacter.getTile();
     
-    //// purely to visualize start and end points
     start.visit();
     end.path();
     
     ArrayList<Edge> path = graph.astar(start, end);
     
-    //npc.location = start.getTileCenter();
     pathToFollow = path;
     npc.segment = 0;
   }

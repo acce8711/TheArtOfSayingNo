@@ -4,28 +4,39 @@ class NPC extends Character{
   RoomInformation room;
   NPCState currentState;
   boolean is_dead;
-  int index;
   boolean readyToExplode;
   
-  NPC(int roomIndex, RoomInformation room, PVector spawnLocation, int npc_index) {
+  NPC(int roomIndex, RoomInformation room, PVector spawnLocation) {
     super(npc_idle_gif, npc_walking_gif, spawnLocation, false, tileSize);
+    this.room = room;
+    
+    //init varaibles
+    is_dead = false;
+    readyToExplode = true;
+    currentRoomIndex = roomIndex;
+    
+    //set current state
     currentState = new NPCWanderState();
     currentState.enterState(this);
-    currentRoomIndex = roomIndex;
-    is_dead = false;
-    this.room = room;
-    readyToExplode = true;
-    index = npc_index;
   }
   
+  //updates NPC display, movement and state loop
+  void updateNPC()
+  {
+    super.update();
+    super.display();
+    currentState.updateState(this);
+  }
+  
+  //swicth state
   void switchState(NPCState state) {
     currentState = state;
     state.enterState(this);
   }
   
+  //returns force to avoid the walls
   PVector avoidWall(){
-    float wanderDist = 10; 
-    float change = 0.3;
+    float wanderDist = NPC_WALL_AVOID_RADIUS; 
 
     PVector prediction = velocity.copy();
     prediction.normalize();
@@ -39,15 +50,7 @@ class NPC extends Character{
     return new PVector(0,0);
   }
   
-    //this is an overide method of the one in the character class
-  void updateNPC()
-  {
-    super.update();
-    super.display();
-    
-    currentState.updateState(this);
- }
-  
+  //check if the npc is too close to the walls of their assigned room
   boolean checkRoomEdges(float location_x, float location_y) {
     
     if (location_x - NPC_HALF_WIDTH <= room.min_x) {
@@ -65,17 +68,20 @@ class NPC extends Character{
     return false;
   }
   
+  //used to avoid walls
   PVector flee(PVector target) {
     PVector steer = seek(target);
     steer.mult(-1);
     return steer;
   }
   
+  //used to seperate NPCS from eachother
   PVector separate(float desiredseparation) {
     PVector velocity_sum = new PVector(0,0);
     
     int counter = 0;
     
+    //loop through the living NPCs and seperate from them
     for (NPC npc : npcs) {
       if(npc.is_dead)
         continue;
@@ -102,6 +108,7 @@ class NPC extends Character{
     return new PVector(0,0);
   }
   
+  //check if the NPC is near the player
   boolean CheckIfNearPlayer() {
     float distance = PVector.sub(mainCharacter.location, location).mag();;
     if(distance < NEAR_PLAYER_RADIUS)
