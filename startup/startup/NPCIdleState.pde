@@ -6,6 +6,7 @@ class NPCIdleState extends NPCState {
   void enterState(NPC npc) {
     println("Entered NPCIdleState state");
     npc.canMove = false;
+    switchPlayerState(new PlayerInteractingState());
     DisplayNoPanelWithRandomQuestion();
   }
   

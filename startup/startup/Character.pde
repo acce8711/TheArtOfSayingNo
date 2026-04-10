@@ -64,9 +64,8 @@ class Character {
   **/
   void display() {
     
-    // TODO - for Qing: Must update to handle switching to the walking_anim when in movement
     imageMode(CENTER);
-    image(idle_anim, location.x, location.y - 10, tileSize + 15, tileSize + 15);
+    image(walking_anim, location.x, location.y - 10, tileSize + 15, tileSize + 15);
     imageMode(CORNER);
 
   }

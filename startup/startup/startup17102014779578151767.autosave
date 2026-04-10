@@ -13,8 +13,6 @@ Dialogue dialogue;
 PImage map;
 ArrayList<NPC> npcs;
 Character mainCharacter;
-ArrayList<Edge> mainPathToFollow;
-PlayerState playerState;
 
 // Images
 PImage npc_dialogue_img;
@@ -40,17 +38,12 @@ Gif npc_walking_gif;
 Gif title_load_gif;
 Gif title_enter_gif;
 
-// Perlin and textures
 Perlin perlin;
 PGraphics floorTexture;
 PGraphics wallTexture;
 
-// Explosion particle system
-ParticleSystem ps;
-
 int start_time;
 int time_elapsed;
-int npcGoneTime;
 
 int max_npcs;
 
@@ -200,19 +193,10 @@ void setPlayerFollowing(boolean is_following){
   npc_following_player = is_following;
 }
 
-void switchPlayerState(PlayerState state) {
-  if (playerState != null && mainCharacter != null) {
-    playerState.exit(mainCharacter);
-  }
-  playerState = state;
-  if (playerState != null && mainCharacter != null) {
-    playerState.enter(mainCharacter);
-  }
-}
-
 void keyPressed() {
   
   if (key == ENTER && (currentGameState instanceof GameStartState || currentGameState instanceof GameEndState)) {
+    print("hello");
     switchGameState(new GamePlayingState());
   }
   
@@ -239,60 +223,6 @@ void keyPressed() {
   }
   if (key == '5') {
     dialogue.setUnlockedNum(5);
-  }
-}
-
-void mousePressed() {
-  if (!(currentGameState instanceof GamePlayingState)) {
-    return;
-  }
-
-  int tileX = floor(mouseX/tileSize);
-  int tileY = floor(mouseY/tileSize);
-
-  if (tileX<0 || tileX>= cols || tileY< 0 || tileY>= rows) {
-    return;
-  }
-
-  int tile_index = (tileY * cols) + tileX;
-  Node end = graph.nodes.get(tile_index);
-  if (end.block) {
-    return;
-  }
-
-  Node start = mainCharacter.getTile();
-
-  // visualize start/end
-  start.visit();
-  end.path();
-
-  mainPathToFollow = graph.astar(start, end);
-  mainCharacter.segment = 0;
-}
-
-//player to able to click on white/walkable path
-boolean isWalkableAt(int x, int y) {
-  if (!(currentGameState instanceof GamePlayingState) || graph == null) {
-    return false;
-  }
-  if (x<0 || x>= width || y<0 || y>height){
-  return false;
-  }
-  int tileX = floor(x/tileSize);
-  int tileY = floor(y/tileSize);
-  if (tileX < 0 || tileX >= cols || tileY < 0 || tileY >= rows) {
-    return false;
-  }
-  int tile_index = (tileY * cols) + tileX;
-  Node node = graph.nodes.get(tile_index);
-  return !node.block;
-}
-
-void updateCursorForWalkable() {
-  if (isWalkableAt(mouseX, mouseY)) {
-    cursor(HAND);
-  } else {
-    cursor(ARROW);
   }
 }
 
@@ -327,6 +257,5 @@ void decrementNPCCount(){
 
 void destroyWalls(){
   //to do: add the room destroying effects
-  switchPlayerState(new PlayerEndingState());
   switchGameState(new GameEndState());
 }

@@ -41,7 +41,12 @@ class GamePlayingState extends GameState {
     
     //spawn character
     mainCharacter = new Character(mc_idle_gif, mc_walking_gif, new PVector(random(rooms.get(0).min_x + NPC_HALF_WIDTH, rooms.get(0).max_x - NPC_HALF_WIDTH), 
-                                                                                random(rooms.get(0).min_y + NPC_HALF_HEIGHT, rooms.get(0).max_y - NPC_HALF_HEIGHT)));
+                                                                                random(rooms.get(0).min_y + NPC_HALF_HEIGHT, rooms.get(0).max_y - NPC_HALF_HEIGHT)));                                                                           
+    mainCharacter.topspeed = 1.5;
+    mainCharacter.maxforce = 0.15;
+    mainPathToFollow = null;
+    switchPlayerState(new PlayerMovingState());
+    
     //create npcs
     npcs = new ArrayList<NPC>();
     //loop through rooms except for starter room
@@ -61,12 +66,18 @@ class GamePlayingState extends GameState {
   
   void updateState() {
     image(map,0,0, width, height);
+    updateCursorForWalkable();
     for (Node n : graph.nodes) {
       n.display();
     }
     for (NPC npc : npcs){
       if(!npc.is_dead)
         npc.updateNPC();
+    }
+    if (playerState != null) {
+      playerState.update(mainCharacter);
+    } else {
+      mainCharacter.update();
     }
     mainCharacter.display();
     
