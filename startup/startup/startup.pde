@@ -35,6 +35,7 @@ PFont actions_font;
 // Animations
 Gif mc_idle_gif;
 Gif mc_walking_gif;
+Gif mc_flex_gif;
 Gif npc_idle_gif;
 Gif npc_walking_gif;
 Gif title_load_gif;
@@ -88,6 +89,9 @@ void setup() {
   // Load GIFs
   mc_idle_gif = new Gif(this, "mc-idle.gif");
   mc_idle_gif.loop();
+  
+  mc_flex_gif = new Gif(this, "mc-flex.gif");
+  mc_flex_gif.loop();
 
   mc_walking_gif = new Gif(this, "mc-walk.gif");
   mc_walking_gif.loop();

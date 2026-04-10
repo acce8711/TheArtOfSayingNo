@@ -35,6 +35,19 @@ class MapErosion {
     drawGrid();
   }
   
+  boolean hasBlackTiles() {
+    boolean hasBlackTile = false;
+    for (int x = 0; x < cols; x++) {
+      for (int y = 0; y < rows; y++) {
+        color c = get(x * tileSize, y * tileSize);
+        if (c == BLACK) {
+          hasBlackTile = true;
+        }
+      }
+    }
+    return hasBlackTile;
+  }
+  
   void drawGrid() {
     rectMode(CORNER);
     for (int x = 0; x < cols; x++) {
