@@ -10,6 +10,9 @@ class GamePlayingState extends GameState {
     graph = new Graph();
     graph.initialize(width, height, tileSize);
     
+    //init particle system
+    ps = new ParticleSystem(new PVector(width/2,height/2));
+    
       for (Node n : graph.nodes) {
       PVector loc = n.getTileCenter();
       if (get(int(loc.x), int(loc.y)) == color(0,0,0)) {
@@ -56,7 +59,6 @@ class GamePlayingState extends GameState {
     HideNoPanelWithRandomQuestion();
   }
   
-  
   void updateState() {
     image(map,0,0, width, height);
     for (Node n : graph.nodes) {
@@ -70,6 +72,17 @@ class GamePlayingState extends GameState {
     
     time_elapsed = millis() - start_time;
     
+    if (ps.particles.size() < 40 && ps.isActive == true) {
+      ps.addParticle();
+      
+      if (ps.particles.size() > 39)
+        ps.isActive = false;
+    }
+    
+    ps.run();
+    
+    stroke(0);
+    fill(0);
     dialogue.display();
   }
   

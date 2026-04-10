@@ -38,9 +38,13 @@ Gif npc_walking_gif;
 Gif title_load_gif;
 Gif title_enter_gif;
 
+// Perlin and textures
 Perlin perlin;
 PGraphics floorTexture;
 PGraphics wallTexture;
+
+// Explosion particle system
+ParticleSystem ps;
 
 int start_time;
 int time_elapsed;

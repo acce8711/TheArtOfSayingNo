@@ -28,6 +28,8 @@ class NPCGoToNewRoomState extends NPCState {
       print(time_elapsed);
       npc.is_dead = true;
       decrementNPCCount();
+      ps.setPosition(npc.location);
+      ps.isActive = true;  
       
       if(npcsLeft == 0) {
         destroyWalls();
