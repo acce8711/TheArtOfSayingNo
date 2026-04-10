@@ -1,3 +1,5 @@
+// Class that renders the dialogue box with the "No" response options
+
 class Dialogue {
 
   int w = width;
@@ -11,8 +13,10 @@ class Dialogue {
   StringList questions;
   
   Dialogue(int new_height) {
+    // Set custom height for dialogue box
     h = new_height;
     
+    // Create list of questions
     questions = new StringList();
     questions.append("WANNA HANGOUT?");
     questions.append("WANNA BE FRIENDS?");
@@ -47,7 +51,7 @@ class Dialogue {
     question = questions.get(int (random(0, numQuestions)));
   }
   
-  //Unlock new no if a latest no is selected
+  // Sets the number of unlocked "No"s
   void setUnlockedNum(int num) {
     unlockedNum = num;
   }
@@ -60,10 +64,6 @@ class Dialogue {
     unlockedNum = min(unlockedNum + 1,5);
   }
   
-  void setQuestionText(String str) {
-    question = str;
-  }
-  
   void hideDialogueBox() {
     isVisible = false;
   }
@@ -74,14 +74,6 @@ class Dialogue {
   
   void toggleVisibility() {
     isVisible = !isVisible;
-  }
-  
-  void setQuestion (int idx) {
-    if (idx >= numQuestions) {
-      println("Out of bounds! We don't have that many questions...");
-      return;
-    }
-    question = questions.get(idx);
   }
   
   void randomiseQuestion() {
@@ -127,6 +119,7 @@ class Dialogue {
       case 5: shiftForward = 0;
     }
     
+    // Rather than having to store multiple "No" option images, shift forward a full set of UI options by an offset to hide locked "No" options
     translate(shiftForward, 0);
     
     image(buttons_img, width - buttons_img.width - padding * 2, height - buttons_img.height - padding);

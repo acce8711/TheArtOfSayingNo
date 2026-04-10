@@ -68,7 +68,7 @@ class NPCGoToNewRoomState extends NPCState {
       decrementNPCCount();
       ps.setPosition(npc.location);
       ps.isActive = true;  
-      npcGoneTime = millis();
+      npc_gone_time = millis();
     }
     
     //if a second has not passed then keep following the A* path

@@ -26,6 +26,8 @@ Dialogue dialogue;
 
 // Map image //<>// //<>//
 PImage map;
+
+// Characters
 ArrayList<NPC> npcs;
 Character mainCharacter;
 ArrayList<Edge> mainPathToFollow;
@@ -34,12 +36,7 @@ PlayerState playerState;
 // Images
 PImage npc_dialogue_img;
 
-// "No" option images
-PImage option_1_img;
-PImage option_2_img;
-PImage option_3_img;
-PImage option_4_img;
-PImage option_5_img;
+// UI Images
 PImage buttons_w_text_ref_img;
 PImage buttons_img;
 
@@ -60,18 +57,21 @@ Gif title_enter_gif;
 Perlin perlin;
 PGraphics floorTexture;
 PGraphics wallTexture;
-
+// Image to store generated map with rendered textures
 PImage generatedMap;
 
 // Explosion particle system
 ParticleSystem ps;
 
+// Time tracking
 int start_time;
 int time_elapsed;
-int npcGoneTime;
 
+// Variable to track time after the last NPC has exploded
+int npc_gone_time;
+
+// NPC number tracking
 int max_npcs;
-
 int npcsLeft;
 
 ArrayList<RoomInformation> rooms;
@@ -86,7 +86,6 @@ void setup() {
   
   // Load images
   map = loadImage("demo-map-2.png");
-  
   buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
 
@@ -125,14 +124,13 @@ void setup() {
   // Dialogue setup
   dialogue = new Dialogue(160);
 
-  // Dialogue setup
-  dialogue = new Dialogue(160);
-
+  // Set up Perlin noise, texture block size, and floor and wall textures to use in tilemap
   int textureBlockSize = 4;
   perlin = new Perlin(500);
   floorTexture = createGraphics(tileSize, tileSize);
   wallTexture = createGraphics(tileSize, tileSize);
 
+  // Map over Perlin noise values into discrete blocks and draw into a PGraphics floor texture
   for (int x = 0; x < tileSize; x+=textureBlockSize) {
     for (int y = 0; y < tileSize; y+=textureBlockSize) {
       float val = perlin.octaveNoise(x + random(1, 10), y, 0.5, 8, 0.5);
@@ -156,6 +154,7 @@ void setup() {
     }
   }
 
+  // Map over Perlin noise values into discrete blocks and draw into a PGraphics wall texture
   for (int x = 0; x < tileSize; x+=textureBlockSize-1) {
     for (int y = 0; y < tileSize; y+=textureBlockSize-1) {
       float val = perlin.octaveNoise(x + random(1, 10), y, 0.4, 8, 0.45);
@@ -178,6 +177,8 @@ void setup() {
       wallTexture.endDraw();
     }
   }
+  
+  // Start the game
   switchGameState(new GameStartState());
 }
 
@@ -193,7 +194,7 @@ void keyPressed() {
     switchGameState(new GamePlayingState());
   }
   
-  //Maps QWERTY to answer No - while interacts with NPCs
+  //Maps QWERTY to answer No - while interacting with NPCs
   if (currentGameState instanceof GamePlayingState && waitingForPlayerNoInput) {
     int optionIndex = -1;
     if (key == 'q' || key == 'Q') optionIndex = 0;
@@ -362,7 +363,7 @@ void decrementNPCCount(){
 }
 
 void destroyWalls(){
-  //to do: add the room destroying effects
+  // Switches to player end state and game end state then destroys the walls
   switchPlayerState(new PlayerEndingState());
   switchGameState(new GameEndState());
 }
