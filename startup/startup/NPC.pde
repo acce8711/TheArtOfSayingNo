@@ -4,14 +4,18 @@ class NPC extends Character{
   RoomInformation room;
   NPCState currentState;
   boolean is_dead;
+  int index;
+  boolean readyToExplode;
   
-  NPC(int roomIndex, RoomInformation room, PVector spawnLocation) {
+  NPC(int roomIndex, RoomInformation room, PVector spawnLocation, int npc_index) {
     super(npc_idle_gif, npc_walking_gif, spawnLocation);
     currentState = new WanderState();
     currentState.enterState(this);
     currentRoomIndex = roomIndex;
     is_dead = false;
     this.room = room;
+    readyToExplode = true;
+    index = npc_index;
   }
   
   void switchState(NPCState state) {

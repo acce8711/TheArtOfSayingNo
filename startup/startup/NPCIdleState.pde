@@ -7,6 +7,7 @@ class NPCIdleState extends NPCState {
     println("Entered NPCIdleState state");
     npc.canMove = false;
     switchPlayerState(new PlayerInteractingState());
+    setPlayerFollowing(false);
     DisplayNoPanelWithRandomQuestion();
   }
   
@@ -15,8 +16,11 @@ class NPCIdleState extends NPCState {
     image(npc.idle_anim, npc.location.x, npc.location.y, tileSize, tileSize);
     imageMode(CORNER);
     //exit idle state once player has selected a no
-    if(!waitingForPlayerNoInput)
+    if(!waitingForPlayerNoInput){
+      npc.readyToExplode = true;
       npc.switchState(new NPCGoToNewRoomState());
+    }
+      
   }
 
   

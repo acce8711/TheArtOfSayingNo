@@ -6,6 +6,7 @@ class TargetState extends NPCState {
   void enterState(NPC npc) {
     println("Entered Target state");
     createFollowPath(npc);
+    npc.topspeed = 1.5;
   }
   
   void updateState(NPC npc) {
@@ -13,7 +14,11 @@ class TargetState extends NPCState {
     image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
     imageMode(CORNER);
     
-    if(npc.CheckIfNearPlayer()){
+    if(!npc_following_player) {
+       npc.readyToExplode = false;
+       npc.switchState(new NPCGoToNewRoomState());
+    }
+    else if(npc.CheckIfNearPlayer() ){
       npc.switchState(new NPCIdleState());
     }
     else if(time_elapsed >= 1000) {
@@ -22,6 +27,8 @@ class TargetState extends NPCState {
       time_elapsed = 0;
     }
     npc.followAStarPath(pathToFollow, tileSize);
+    
+   
 
   }
   

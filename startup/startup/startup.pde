@@ -9,7 +9,7 @@ boolean npc_following_player;
 boolean waitingForPlayerNoInput;
 Dialogue dialogue;
 
-// Map image
+// Map image //<>//
 PImage map;
 ArrayList<NPC> npcs;
 Character mainCharacter;
@@ -58,11 +58,11 @@ int npcsLeft;
 
 ArrayList<RoomInformation> rooms;
 
-final int MIN_NPCS_IN_ROOM = 0;
-final int MAX_NPCS_IN_ROOM = 2;
+final int MIN_NPCS_IN_ROOM = 2;
+final int MAX_NPCS_IN_ROOM = 4;
 
-final int NPC_HALF_WIDTH = 20;
-final int NPC_HALF_HEIGHT = 20;
+final int NPC_HALF_WIDTH = 25;
+final int NPC_HALF_HEIGHT = 30;
 
 final int NEAR_PLAYER_RADIUS = 40;
 
@@ -75,6 +75,7 @@ void setup() {
 
   // Load images
   map = loadImage("demo-map-2.png");
+
 
   buttons_w_text_ref_img = loadImage("options-6.png");
   buttons_img = loadImage("options-buttons.png");
@@ -188,7 +189,9 @@ int GetRoomAtTile(PVector tile_center){
 }
 
 RoomInformation GeRandomRoom(int curr_room){
+
   int room_index = curr_room;
+  
   while(room_index == curr_room){
     room_index = int(random(0, rooms.size()));
   }

@@ -11,12 +11,22 @@ class WanderState extends NPCState {
     image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
     imageMode(CORNER);
     
-    if(!npc_following_player && time_elapsed >= time_before_target)
+    if(npc.CheckIfNearPlayer() && !waitingForPlayerNoInput)
+    {
+      setPlayerFollowing(false);
+      //targeting_npc_index = npc.index;
+      waitingForPlayerNoInput = true;
+      npc.switchState(new NPCIdleState());
+    } 
+    else if(!npc_following_player && !waitingForPlayerNoInput && time_elapsed >= time_before_target)
     {
       setPlayerFollowing(true);
       resetTime();
+      //targeting_npc_index = npc.index;
       npc.switchState(new TargetState());
-    } else {
+      print(npc.index);
+    } 
+    else {
       //wander within the room and avoid the walls
       PVector wanderForce = npc.wander();
       PVector avoidForce = npc.avoidWall();

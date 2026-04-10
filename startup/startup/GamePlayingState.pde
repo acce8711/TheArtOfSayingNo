@@ -3,6 +3,7 @@ class GamePlayingState extends GameState {
     println("Entered GamePlayingState state");
     npc_following_player = false;
     waitingForPlayerNoInput = false;
+    //targeting_npc_index = -1;
     start_time = millis();
     image(map,0,0, width, height);
   
@@ -27,17 +28,17 @@ class GamePlayingState extends GameState {
     //cerate rooms
     rooms = new ArrayList<RoomInformation>();
     //top left room
-    rooms.add(new RoomInformation(80, 380, 60, 260));
+    rooms.add(new RoomInformation(0, 80, 380, 60, 260));
     //top right room
-    rooms.add(new RoomInformation(480, 700, 180, 300));
+    rooms.add(new RoomInformation(1, 480, 700, 180, 300));
     //middle left room
-    rooms.add(new RoomInformation(840, 1100, 80, 260));
+    rooms.add(new RoomInformation(2, 840, 1100, 80, 260));
     //middle room
-    rooms.add(new RoomInformation(120, 300, 300, 540));
+    rooms.add(new RoomInformation(3, 120, 300, 300, 540));
     //middle right room
-    rooms.add(new RoomInformation(380, 800, 380, 560));
+    rooms.add(new RoomInformation(4, 380, 800, 380, 560));
     //bottom middle room
-    rooms.add(new RoomInformation(900, 1100, 340, 540));
+    rooms.add(new RoomInformation(5, 900, 1100, 340, 540));
     
     //spawn character
     mainCharacter = new Character(mc_idle_gif, mc_walking_gif, new PVector(random(rooms.get(0).min_x + NPC_HALF_WIDTH, rooms.get(0).max_x - NPC_HALF_WIDTH), 
@@ -55,7 +56,7 @@ class GamePlayingState extends GameState {
       int numNPCsToSpawn = int(random(MIN_NPCS_IN_ROOM, MAX_NPCS_IN_ROOM));
       for(int j = 0; j < numNPCsToSpawn; j++){
         npcs.add(new NPC(i, rooms.get(i), new PVector(random(rooms.get(i).min_x + NPC_HALF_WIDTH, rooms.get(i).max_x - NPC_HALF_WIDTH), 
-                                                      random(rooms.get(i).min_y + NPC_HALF_HEIGHT, rooms.get(i).max_y - NPC_HALF_HEIGHT))));
+                                                      random(rooms.get(i).min_y + NPC_HALF_HEIGHT, rooms.get(i).max_y - NPC_HALF_HEIGHT)), npcsLeft));
         npcsLeft++;
       }
     }

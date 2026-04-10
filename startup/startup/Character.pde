@@ -199,7 +199,7 @@ class Character {
   Test if the character has stopped moving
   */
   //To REMOVE
-  //boolean stopped() {
-  //  return (velocity.mag() < 0.01);
-  //}
+  boolean stopped() {
+    return (velocity.mag() < 0.01);
+  }
 }
