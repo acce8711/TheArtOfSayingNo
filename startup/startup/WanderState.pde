@@ -20,7 +20,7 @@ class WanderState extends NPCState {
       //wander within the room and avoid the walls
       PVector wanderForce = npc.wander();
       PVector avoidForce = npc.avoidWall();
-      PVector seperateForce = npc.separate(30);
+      PVector seperateForce = npc.separate(50);
       npc.applyForce(wanderForce);
       npc.applyForce(seperateForce);
       npc.applyForce(avoidForce.mult(100));
