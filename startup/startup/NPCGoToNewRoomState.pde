@@ -1,5 +1,4 @@
 class NPCGoToNewRoomState extends NPCState {
-  
   // Path to follow
   ArrayList<Edge> pathToFollow;
 
@@ -22,18 +21,14 @@ class NPCGoToNewRoomState extends NPCState {
     imageMode(CENTER);
     image(npc.walking_anim, npc.location.x, npc.location.y, tileSize, tileSize);
     imageMode(CORNER);
-    
+        
     //explode npc after 1 second
     if(time_elapsed > 1000){
-      print(time_elapsed);
       npc.is_dead = true;
       decrementNPCCount();
       ps.setPosition(npc.location);
       ps.isActive = true;  
-      
-      if(npcsLeft == 0) {
-        destroyWalls();
-      }
+      npcGoneTime = millis();
     }
     else
       npc.followAStarPath(pathToFollow, tileSize);

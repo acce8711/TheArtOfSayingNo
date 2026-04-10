@@ -48,6 +48,7 @@ ParticleSystem ps;
 
 int start_time;
 int time_elapsed;
+int npcGoneTime;
 
 int max_npcs;
 
@@ -200,7 +201,6 @@ void setPlayerFollowing(boolean is_following){
 void keyPressed() {
   
   if (key == ENTER && (currentGameState instanceof GameStartState || currentGameState instanceof GameEndState)) {
-    print("hello");
     switchGameState(new GamePlayingState());
   }
   

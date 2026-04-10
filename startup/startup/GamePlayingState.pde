@@ -1,4 +1,4 @@
-class GamePlayingState extends GameState {
+class GamePlayingState extends GameState {  
   void enterState() {
     println("Entered GamePlayingState state");
     npc_following_player = false;
@@ -80,6 +80,13 @@ class GamePlayingState extends GameState {
     }
     
     ps.run();
+        
+    if(npcsLeft == 0) {
+      int endDelayTime = millis() - npcGoneTime;
+      println(endDelayTime);
+    }
+    
+    
     
     stroke(0);
     fill(0);
