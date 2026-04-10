@@ -94,7 +94,10 @@ class GamePlayingState extends GameState {
         
     if(npcsLeft == 0) {
       int endDelayTime = millis() - npcGoneTime;
-      println(endDelayTime);
+      
+      if (endDelayTime > 2000) {
+        destroyWalls();
+      }
     }
     
     
