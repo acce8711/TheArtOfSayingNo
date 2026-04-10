@@ -18,21 +18,19 @@ _____
 1. Complex Movement Algorithms: NPCs utilize a Wander algorithm to move between rooms.
 2. Pathfinding: A* algorithm was used for both player movement (recalculated on every click) and NPC following (recalculated every second).
 3. Decision Making: Manages states for both player (Moving and Interacting with NPCs) and NPC (Wandering, Following player, Waiting for response, Running away from player).
-4. Procedural Content Generation: Perlin noise applied for noisy movement and generating pixelated terrain textures. Cellular Automata used to deteriorate walls at the end of the game.
+4. Procedural Content Generation: Perlin noise applied for noisy particle system properties for NPC explosion effects and generating pixelated terrain textures. Cellular Automata used to deteriorate walls at the end of the game.
 5. Separate: NPCs avoiding bumping into each other.
 6. Flee: NPCs avoid going through the walls when wandering.
 7. Additional Interaction: Point and click system integrated with pathfinding for player movement. 
 
 ### How to View 👁️
-1. Pathfinding/Movement: Click on white tiles on the map to see the red character (player) navigate the environment using A*.
+1. Pathfinding/Movement: Click on white tiles on the map to see the red character (player) navigate the environment using A*. NPCs also use pathfinding when targeting the player character.
 2. Decision Making: Observe NPCs wandering until they detect the player, which they will switch to “following” to ask the player a question. Players are to make decisions using QWERTY when an NPC gets close to them and the question UI menu pops up.
-3. Procedural Content Generation: The environment is generated at the start of the game and can be seen throughout the gameplay, where the wall deterioration effect is visible when player successfully rejects all of NPCs’ questions.
+3. Procedural Content Generation: The environment's procedural pixelated textures are generated at the start of the game and can be seen throughout the gameplay. The wall deterioration effect driven by cellular automata is visible after the player successfully rejects all of NPCs’ questions. Perlin noise is used to affect the explosion particle properties (velocity, rotation, etc.).
 
 ### Contributions 👥
 👤 Amina - NPC Movement & State Machines, Game Manager (Start, Idle, End)\
-👤 Emma - Game UI, Character & NPC Art + Animation, Procedural Room & Maze Generation, Explosion Effects\
+👤 Emma - Game UI, Character & NPC Art + Animation, Procedural Texture Generation, Map Erosion Effect, Explosion Effects\
 👤 Qing - Player Movement & State Machines, Player Action (Point & Click)
-
-<br>
 
 
