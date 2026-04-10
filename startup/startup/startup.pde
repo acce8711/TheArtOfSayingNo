@@ -45,6 +45,8 @@ Perlin perlin;
 PGraphics floorTexture;
 PGraphics wallTexture;
 
+PImage generatedMap;
+
 // Explosion particle system
 ParticleSystem ps;
 

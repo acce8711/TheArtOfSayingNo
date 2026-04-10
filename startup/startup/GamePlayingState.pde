@@ -13,7 +13,7 @@ class GamePlayingState extends GameState {
     //init particle system
     ps = new ParticleSystem(new PVector(width/2,height/2));
     
-      for (Node n : graph.nodes) {
+    for (Node n : graph.nodes) {
       PVector loc = n.getTileCenter();
       if (get(int(loc.x), int(loc.y)) == color(0,0,0)) {
         n.block();
@@ -23,6 +23,13 @@ class GamePlayingState extends GameState {
       } 
     }
     graph.handleBlockedNodes();
+    
+    // Save generated tilemap to image
+    for (Node n : graph.nodes) {
+      n.display();
+    }
+    
+    generatedMap = get();
     
     //cerate rooms
     rooms = new ArrayList<RoomInformation>();

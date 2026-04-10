@@ -9,6 +9,7 @@ class GameEndState extends GameState {
   
   void updateState() {
     background(0);
+    image(generatedMap, 0,0);
   }
  
 }
