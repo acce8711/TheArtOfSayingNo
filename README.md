@@ -25,11 +25,11 @@ _____
 
 ### How to View 👁️
 1. Pathfinding/Movement: Click on white tiles on the map to see the red character (player) navigate the environment using A*. NPCs also use pathfinding when targeting the player character.
-2. Decision Making: Observe NPCs wandering until they detect the player, which they will switch to “following” to ask the player a question. Players are to make decisions using QWERTY when an NPC gets close to them and the question UI menu pops up.
+2. Decision Making: Observe NPCs wandering. If no NPC is following the player then every 2-3 seconds a new NPC will start following the player. If the player bumps into another npc then the npc that is following them will stop and go wander in a room. Players are to make decisions using QWERTY when an NPC gets close to them and the question UI menu pops up.
 3. Procedural Content Generation: The environment's procedural pixelated textures are generated at the start of the game and can be seen throughout the gameplay. The wall deterioration effect driven by cellular automata is visible after the player successfully rejects all of NPCs’ questions. Perlin noise is used to affect the explosion particle properties (velocity, rotation, etc.).
 
 ### Contributions 👥
-👤 Amina - NPC Movement & State Machines, Game Manager (Start, Idle, End)\
+👤 Amina - NPC Movement & State Machines, Game State Manager\
 👤 Emma - Game UI, Character & NPC Art + Animation, Procedural Texture Generation, Map Erosion Effect, Explosion Effects\
 👤 Qing - Player Movement & State Machines, Player Action (Point & Click)
 
