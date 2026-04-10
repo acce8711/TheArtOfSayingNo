@@ -1,4 +1,5 @@
 class PlayerInteractingState extends PlayerState {
+  //Stop player to show dialogue/interact with NPC
   void enter(Character player) {
     player.canMove = false;
     player.velocity.mult(0);
@@ -7,6 +8,7 @@ class PlayerInteractingState extends PlayerState {
     DisplayNoPanelWithRandomQuestion();
   }
 
+//Return to moving once interaction is done
   void update(Character player) {
     if (!waitingForPlayerNoInput) {
       switchPlayerState(new PlayerMovingState());

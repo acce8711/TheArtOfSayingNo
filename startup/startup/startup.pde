@@ -35,6 +35,7 @@ PFont actions_font;
 // Animations
 Gif mc_idle_gif;
 Gif mc_walking_gif;
+Gif mc_flex_gif;
 Gif npc_idle_gif;
 Gif npc_walking_gif;
 Gif title_load_gif;
@@ -74,7 +75,8 @@ void setup() {
 
   pixelDensity(1);
   size(1280, 720);
-
+  windowTitle ("The Art of Saying No");  
+  
   // Load images
   map = loadImage("demo-map-2.png");
 
@@ -89,6 +91,9 @@ void setup() {
   // Load GIFs
   mc_idle_gif = new Gif(this, "mc-idle.gif");
   mc_idle_gif.loop();
+  
+  mc_flex_gif = new Gif(this, "mc-flex.gif");
+  mc_flex_gif.loop();
 
   mc_walking_gif = new Gif(this, "mc-walk.gif");
   mc_walking_gif.loop();
@@ -217,37 +222,29 @@ void switchPlayerState(PlayerState state) {
 
 void keyPressed() {
   
+  //Start or restart game when Enter is pressed
   if (key == ENTER && (currentGameState instanceof GameStartState || currentGameState instanceof GameEndState)) {
     switchGameState(new GamePlayingState());
   }
   
-  //this is a temporary space key that hides the "no" panel and continues the game
-  if ((key == 'q' || key == 'Q') && currentGameState instanceof GamePlayingState && waitingForPlayerNoInput)
-  {
-    HideNoPanelWithRandomQuestion();
-  }
-  
-  if (key == '0') {
-    dialogue.setUnlockedNum(0);
-  }
-  if (key == '1') {
-    dialogue.setUnlockedNum(1);
-  }
-  if (key == '2') {
-      dialogue.setUnlockedNum(2);
-  }
-  if (key == '3') {
-      dialogue.setUnlockedNum(3);
-  }
-  if (key == '4') {
-      dialogue.setUnlockedNum(4);
-  }
-  if (key == '5') {
-    dialogue.setUnlockedNum(5);
+  //Maps QWERTY to answer No - while interacts with NPCs
+  if (currentGameState instanceof GamePlayingState && waitingForPlayerNoInput) {
+    int optionIndex = -1;
+    if (key == 'q' || key == 'Q') optionIndex = 0;
+    else if (key == 'w' || key == 'W') optionIndex = 1;
+    else if (key == 'e' || key == 'E') optionIndex = 2;
+    else if (key == 'r' || key == 'R') optionIndex = 3;
+    else if (key == 't' || key == 'T') optionIndex = 4;
+    else if (key == 'y' || key == 'Y') optionIndex = 5;
+    
+    if (optionIndex != -1){
+      HandleNoAnswer(optionIndex);
+    }
   }
 }
 
 void mousePressed() {
+  //Only allowing click to move during gameplay (player)
   if (!(currentGameState instanceof GamePlayingState)) {
     return;
   }
@@ -255,27 +252,30 @@ void mousePressed() {
   int tileX = floor(mouseX/tileSize);
   int tileY = floor(mouseY/tileSize);
 
+  //To ignore clicks outside the grid
   if (tileX<0 || tileX>= cols || tileY< 0 || tileY>= rows) {
     return;
   }
-
+  
+  //To get clicked tiles and ignore the walls
   int tile_index = (tileY * cols) + tileX;
   Node end = graph.nodes.get(tile_index);
   if (end.block) {
     return;
   }
-
+  
   Node start = mainCharacter.getTile();
 
   // visualize start/end
   start.visit();
   end.path();
-
+  
+  //Using A* path to the clicked tile and start executing it
   mainPathToFollow = graph.astar(start, end);
   mainCharacter.segment = 0;
 }
 
-//player to able to click on white/walkable path
+//Player to able to click on white/walkable path
 boolean isWalkableAt(int x, int y) {
   if (!(currentGameState instanceof GamePlayingState) || graph == null) {
     return false;
@@ -293,6 +293,7 @@ boolean isWalkableAt(int x, int y) {
   return !node.block;
 }
 
+//Switching cursor for players to only able to click on the white tiles
 void updateCursorForWalkable() {
   if (isWalkableAt(mouseX, mouseY)) {
     cursor(HAND);
@@ -314,6 +315,22 @@ void HideNoPanelWithRandomQuestion()
 {
   waitingForPlayerNoInput = false;
   dialogue.hideDialogueBox();
+}
+
+void HandleNoAnswer(int optionIndex) {
+  if (!waitingForPlayerNoInput) {
+    return;
+  }
+  //To ignore choices that aren't unlocked yet
+  if (optionIndex > dialogue.getUnlockedNum()) {
+    return;
+  }
+  
+  //Only unlock the next No if player chose the latest unlocked option
+  if (optionIndex == dialogue.getUnlockedNum()) {
+    dialogue.unlockNext();
+  }
+  HideNoPanelWithRandomQuestion();
 }
 
 void resetTime(){

@@ -1,3 +1,4 @@
+//Freeze player when game ends
 class PlayerEndingState extends PlayerState {
   void enter(Character player) {
     player.canMove = false;

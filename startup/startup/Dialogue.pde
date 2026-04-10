@@ -47,8 +47,17 @@ class Dialogue {
     question = questions.get(int (random(0, numQuestions)));
   }
   
+  //Unlock new no if a latest no is selected
   void setUnlockedNum(int num) {
     unlockedNum = num;
+  }
+  
+  int getUnlockedNum() {
+    return unlockedNum;
+  }
+  
+  void unlockNext() {
+    unlockedNum = min(unlockedNum + 1,5);
   }
   
   void setQuestionText(String str) {
